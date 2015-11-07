@@ -1,0 +1,25 @@
+New log file opened at Sat Nov 07 02:43:59 EST 2015 by 3780@Steve
+Taking next connection to: 56626
+New client attempting to connect on port: 56627-56626
+  Address = /160.39.199.6:56626
+This client on port 56627 has uuid 2e46d558-4086-4206-b406-fa5d6397aba0 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-2e46d558-4086-4206-b406-fa5d6397aba0
+Taking next connection to: 56626
+Checking to see if clients are empty...
+We have 1 non-daemon clients, continuing serving connections.
+Taking next connection to: 56626
+Checking to see if clients are empty...
+We have 1 non-daemon clients, continuing serving connections.
+Taking next connection to: 56626
+Checking to see if clients are empty...
+We have 1 non-daemon clients, continuing serving connections.
+Taking next connection to: 56626
+Checking to see if clients are empty...
+We have 1 non-daemon clients, continuing serving connections.
+Taking next connection to: 56626
+Checking to see if clients are empty...
+No non-daemon clients connected after 3 min. Shutting down.
+Server socket thread exiting.
+0 clients open, will close them...
+All client sockets have been closed.
+Closing the 3780@Steve logs at Sat Nov 07 02:58:59 EST 2015, goodbye.
