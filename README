@@ -1,4 +1,9 @@
-This is your new Play application
+Ballotboard
 =================================
-
-This file will be packaged with your application, when using `activator dist`.
+## Files and Folders
+build.sbt 			`Information/settings about the dependencies we're using (play-jongo for db, etc)`
+out/				`Generated after running`
+project/			`Compiled classes`
+public/				`Javascript Css Jquery`
+test/				`Where we create tests`
+app/				`Where our mvc main application is`
