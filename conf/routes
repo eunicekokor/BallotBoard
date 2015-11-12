@@ -5,7 +5,15 @@
 # Home page
 GET     /                           controllers.Application.index()
 
-GET     /profile                    controllers.Application.profile()
+GET     /login                      controllers.Application.login()
+
+POST    /login                      controllers.Application.authenticate()
+
+GET     /signup                     controllers.Application.signup()
+
+POST    /signup                     controllers.Application.register()
+
+GET     /user                       controllers.Application.user()
 
 GET     /ballot                     controllers.Application.ballot()
 
