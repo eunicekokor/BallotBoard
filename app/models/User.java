@@ -14,6 +14,9 @@ public class User {
     @JsonProperty("_id")
     public ObjectId id;
     public String username;
+    public String fullname;
+    public String email;
+    public String password;
 
     public void insert() {
         users().save(this);
@@ -23,13 +26,12 @@ public class User {
         users().remove(this.id);
     }
 
-    public static User findByName(String name) {
-        return users().findOne("{name: #}", name).as(User.class);
+    public static User findByUsername(String name) {
+        return users().findOne("{username: #}", name).as(User.class);
     }
 
-    @Override
-    public String toString() {
-        return "Welcome, " + username;
-    }
 
+    public static Boolean authenticate(String email, String password) {
+        return null;
+    }
 }
