@@ -68,7 +68,7 @@ public class Ballot {
      * @param id, id of the ballot to query
      * @return Ballot class if a match is found
      */
-    public Ballot findById(ObjectId id) {
+    public static Ballot findById(ObjectId id) {
         return ballots().findOne("{_id: #}", id).as(Ballot.class);
     }
 

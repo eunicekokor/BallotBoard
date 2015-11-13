@@ -2,6 +2,7 @@ package controllers;
 
 import models.Ballot;
 import models.User;
+import org.bson.types.ObjectId;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.data.*;
@@ -12,6 +13,7 @@ import views.html.*;
 
 public class Application extends Controller {
 
+    private String currentUser = "";
     /**
      * Handles requests to /login route
      * @return login form
@@ -27,6 +29,7 @@ public class Application extends Controller {
     public Result logout() {
         session().clear();
         flash("success", "You've been logged out");
+        currentUser = "";
         return redirect(
                 routes.Application.login()
         );
@@ -44,24 +47,7 @@ public class Application extends Controller {
         } else {
             session().clear();
             session("email", loginForm.get().email);
-            Ballot tmp = new Ballot();
-
-            //FIXME Adding test ballots
-            tmp.create("Kony 2012", "This vote will determine the fate of the universe.", "Nkrumah");
-            tmp.insert();
-
-            Ballot tmp1 = new Ballot();
-            tmp1.create("Kony 2013", "This vote will determine the fate of the universe.", "Azikiwe");
-            tmp1.insert();
-
-            Ballot tmp2 = new Ballot();
-            tmp2.create("Kony 2014", "This vote will determine the fate of the universe.", "Lumumba");
-            tmp2.insert();
-
-            Ballot tmp3 = new Ballot();
-            tmp3.create("Kony 2015", "This vote will determine the fate of the universe.", "Mandela");
-            tmp3.insert();
-
+            currentUser = loginForm.get().email;
             return redirect(
                     routes.Application.ballot()
             );
@@ -145,7 +131,13 @@ public class Application extends Controller {
     }
 
     public Result ballot() {
-        return ok(ballot.render(Ballot.findAll(), request().username()));
+        return ok(ballot.render(Ballot.findAll(), currentUser));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public Result ballotView(String id) {
+        ObjectId ballotId = new ObjectId(id);
+        return ok(ballotView.render(Ballot.findById(ballotId), currentUser));
     }
 
     /**

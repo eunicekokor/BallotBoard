@@ -17,6 +17,8 @@ GET     /user                       controllers.Application.user()
 
 GET     /ballot                     controllers.Application.ballot()
 
+GET     /ballot/:id                 controllers.Application.ballotView(id: String)
+
 # Create a new ballot
 GET     /create                     controllers.Application.ballotForm()
 

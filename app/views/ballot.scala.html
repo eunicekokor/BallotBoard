@@ -9,7 +9,7 @@
             <a class="navbar-brand" href="">BallotBoard</a>
             <div class="navbar-right">
                 <a class="btn btn-danger navbar-btn" href="/create">Create Ballot</a>
-                @if(user != null) {
+                @if(!user.equals("")) {
                     <li><a href="/user"><span class="glyphicon glyphicon-user"> @user </span></a></li>
                     <a class="btn btn-default navbar-btn" href="/logout">Logout</a>
                 } else {
@@ -31,7 +31,8 @@
                           <div class="panel-body">
                               <p>@b.description</p>
                           </div>
-                          <div class="panel-footer">Vote Count <span class="badge">@b.voteCount</span></div>
+                          <div class="panel-footer">Vote Count <span class="badge">@b.voteCount</span>
+                            <a class="btn btn-primary" href="/ballot/@b.id">Vote</a></div>
                       </div>
                   </div>
               }

@@ -9,12 +9,8 @@
                     <a class="navbar-brand" href="">BallotBoard</a>
                     <div class="navbar-right">
                         <a class="btn btn-danger" href="/create">Create Ballot</a>
-                        @if(user != null) {
-                            <li><a href="/user"><span class="glyphicon glyphicon-user"> @user </span></a></li>
-                            <a class="btn btn-default" href="/logout">Logout</a>
-                        } else {
-                            <a class="btn btn-primary" href="/login">Sign In</a>
-                        }
+                        <a href="/user"> @user</a>
+                        <a class="btn btn-default" href="/logout">Logout</a>
                     </div>
                 </div>
             </div>
