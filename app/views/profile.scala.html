@@ -1,30 +1,58 @@
-@(message: String)
+@(createdBallots: List[Ballot], voteHistory: List[Ballot], user: String)
 
 @main("Profile") {
 
-  <div class="header">
-    <div class="navbar navbar-default" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#/">BallotBoard</a>
+    <div class="header">
+        <div class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="">BallotBoard</a>
+                    <div class="navbar-right">
+                        <a class="btn btn-danger" href="/create">Create Ballot</a>
+                        <a href="/user"> @user</a>
+                        <a class="btn btn-default" href="/logout">Logout</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="collapse navbar-collapse" id="js-navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="/">Home</a></li>
-            <li class="active"><a href="profile">Profile</a></li>
-            <li><a href="ballot">Ballots</a></li>
-          </ul>
-        </div>
-      </div>
     </div>
-  </div>
-  <div class="Container">
-    <p>Welcome to your profile</p>
-  </div>
+    <section class="content">
+    <div class="container">
+        <h3 class="text-center">Ballots Created by Me</h3>
+        <div class="jumbotron">
+          <div class="row">
+          @for(b <- createdBallots) {
+              <div class="col-md-3">
+                  <div class="panel panel-default">
+                      <div class="panel-heading">@b.ballotName</div>
+                      <div class="panel-body">
+                          <p>@b.description</p>
+                      </div>
+                      <div class="panel-footer">Vote Count <span class="badge">@b.voteCount</span></div>
+                  </div>
+              </div>
+          }
+          </div>
+        </div>
+    </div>
+    <div class="container">
+        <h3 class="text-center">Vote History</h3>
+        <div class="jumbotron">
+            <div class="row">
+            @for(b <- createdBallots) {
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">@b.ballotName</div>
+                        <div class="panel-body">
+                            <p>@b.description</p>
+                        </div>
+                        <div class="panel-footer">Vote Count <span class="badge">@b.voteCount</span></div>
+                    </div>
+                </div>
+            }
+            </div>
+        </div>
+    </div>
+    </section>
+
 }
