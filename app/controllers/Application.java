@@ -142,11 +142,13 @@ public class Application extends Controller {
     }
 
     public Result ballot() {
+        currentUser = session("email");
         return ok(ballot.render(Ballot.findAll(), currentUser));
     }
 
     @Security.Authenticated(Secured.class)
     public Result ballotView(String id) {
+        currentUser = session("email");
         ObjectId ballotId = new ObjectId(id);
         return ok(ballotView.render(Ballot.findById(ballotId), currentUser));
     }

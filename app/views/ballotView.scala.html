@@ -8,9 +8,10 @@
         <div class="navbar-header">
           <a class="navbar-brand" href="">BallotBoard</a>
           <div class="navbar-right">
-            <a class="btn btn-danger navbar-btn" href="/create">Create Ballot</a>
-            <li><a href="/user"><span class="glyphicon glyphicon-user"> @user </span></a></li>
-            <a class="btn btn-default navbar-btn" href="/logout">Logout</a>
+            <a href="/user"> <i class="fa fa-user"></i> @user</a>
+            <a class="btn btn-default navbar-btn" href="/create">Create Ballot</a>
+            <a class="btn btn-default navbar-btn" href="/ballot">View All Ballots</a>
+            <a class="btn btn-danger navbar-btn" href="/logout">Logout</a>
           </div>
         </div>
       </div>
@@ -26,7 +27,7 @@
               <div class="panel-body">
                 <p>@ballot.description</p>
               </div>
-              <div class="panel-footer">Vote Count <span class="badge">@ballot.voteCount</span></div>
+              <div class="panel-footer">Vote Count <span class="badge">@ballot.voteCount</span> Created by @ballot.ownerUsername</div>
             </div>
           </div>
         </div>

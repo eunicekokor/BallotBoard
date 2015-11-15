@@ -6,12 +6,12 @@
     <div class="navbar navbar-default" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="">BallotBoard</a>
+            <a class="navbar-brand" href="/">BallotBoard</a>
             <div class="navbar-right">
-                <a class="btn btn-danger navbar-btn" href="/create">Create Ballot</a>
                 @if(!user.equals("")) {
-                    <li><a href="/user"><span class="glyphicon glyphicon-user"> @user </span></a></li>
+                    <a href="/user"> <i class="fa fa-user"></i> @user</a>
                     <a class="btn btn-default navbar-btn" href="/logout">Logout</a>
+                    <a class="btn btn-danger navbar-btn" href="/create">Create Ballot</a>
                 } else {
                     <a class="btn btn-primary navbar-btn" href="/login">Sign In</a>
                 }
@@ -27,12 +27,13 @@
               @for(b <- ballots) {
                   <div class="col-md-3">
                       <div class="panel panel-default">
-                          <div class="panel-heading">@b.ballotName</div>
+                          <div class="panel-heading"><a href="/ballot/@b.id">@b.ballotName</a></div>
                           <div class="panel-body">
                               <p>@b.description</p>
                           </div>
                           <div class="panel-footer">Vote Count <span class="badge">@b.voteCount</span>
                             <a class="btn btn-primary" href="/ballot/@b.id">Vote</a></div>
+                            <div class="text-center small"> Created by @b.ownerUsername </div>
                       </div>
                   </div>
               }
