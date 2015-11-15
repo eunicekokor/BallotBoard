@@ -69,7 +69,9 @@ public class Application extends Controller {
                     signUpForm.get().email, signUpForm.get().password);
             newUser.insert();
             session().clear();
-            session("username", signUpForm.get().username);
+            // session("username", signUpForm.get().username);
+            session("email", signUpForm.get().email);
+            currentUser = signUpForm.get().email;
             return redirect(
                     routes.Application.ballot()
             );
@@ -107,7 +109,7 @@ public class Application extends Controller {
             tmp.create(bForm.get().ballotName, bForm.get().description, request().username());
             tmp.insert();
             return redirect(
-                    routes.Application.user()
+                    routes.Application.ballot()
             );
         }
     }
@@ -120,6 +122,15 @@ public class Application extends Controller {
     public Result ballotForm() {
         return ok(ballotForm.render(form(BallotForm.class)));
     }
+
+    // /**
+    //  * Vote on a ballot
+    //  * @return
+    //  */
+    // @Security.Authenticated(Secured.class)
+    // public Result vote(String id) {
+
+    // }
 
     /**
      * Handles /user route

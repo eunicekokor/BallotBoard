@@ -1,6 +1,12 @@
 @(form: Form[Application.BallotForm])
 
+@*********************
+ * Potentially having current user on each page *
+ * @(form: Form[Application.BallotForm], user: String)*
+ *********************@
+
 @main("Create an Ballot") {
+
   <section class="contents">
     <div class="container">
     <div class="row" id="form-container">
