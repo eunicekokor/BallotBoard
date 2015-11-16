@@ -143,6 +143,10 @@ public class Application extends Controller {
 
     public Result ballot() {
         currentUser = session("email");
+        if (currentUser == null){
+            currentUser = "";
+        }
+
         return ok(ballot.render(Ballot.findAll(), currentUser));
     }
 
