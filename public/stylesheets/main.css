@@ -37,3 +37,34 @@ body {
 .contents {
     margin-top: 60px;
 }
+
+.ballots{
+    margin-top: 5px;
+}
+
+.panel{
+    box-shadow: 5px 5px 2px #888888;
+}
+
+.panel:hover{
+    box-shadow: 2px 2px 1px #888888;
+    border-width: thin;
+}
+
+.bs-callout {
+    padding: 5px;
+    margin: 10px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+}
+
+.bs-callout-quote {
+    border-left-color: gray;
+}
+
+.bs-callout-info {
+    border-left-color: #5bc0de;
+}
+.bs-callout-info h4 {
+    color: #5bc0de;
+}

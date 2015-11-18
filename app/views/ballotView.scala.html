@@ -32,7 +32,7 @@
                 <a class="btn btn-primary" href="@routes.Application.ballotVote(ballot.id.toString(), false)"><i class="fa fa-thumbs-up"></i> DownVote</a><span class="col-sm-offset-6">
                 Vote Count <span class="badge">@ballot.voteCount</span></span>
                 </div>
-                @message
+                <p class="text-danger text-center bg-warning">@message</p>
             </div>
           </div>
         </div>

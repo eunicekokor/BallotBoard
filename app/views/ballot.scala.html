@@ -24,7 +24,13 @@
     <section class="content">
   <div class="container">
       <div class="jumbotron">
-      <h1> All Ballots </h1>
+      
+      <h1 class="text-left"> All Ballots </h1>
+      <blockquote class="bs-callout-quote text-left">
+        <p>When the whole world is silent, even one voice becomes powerful</p>
+        <footer>Malala Yousafzai</footer>
+      </blockquote>
+      <div class="ballots container">
           <div class="row">
               @for(b <- ballots) {
                   <div class="col-md-4">
@@ -35,7 +41,7 @@
                           </div>
                           <div class="panel-footer text-left">
                             <a class="btn btn-mini" href="/ballot/@b.id">Click to Vote</a>
-                            <span class="col-sm-offset-3">Vote Count 
+                            <span class="col-sm-offset-2">Vote Count 
                             <span class="badge">@b.voteCount
                             </span></span>
                           </div>
@@ -44,6 +50,7 @@
                   </div>
               }
           </div>
+      </div>
       </div>
   </div>
     </section>
