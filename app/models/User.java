@@ -5,6 +5,8 @@ import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 import uk.co.panaxiom.playjongo.*;
 
+import java.util.ArrayList;
+
 public class User {
 
     public static MongoCollection users() {
@@ -17,6 +19,7 @@ public class User {
     public String fullname;
     public String email;
     public String password;
+    public ArrayList<String> voteHistory;
 
     /**
      * Creates a new user
@@ -30,6 +33,7 @@ public class User {
         this.fullname = fullname;
         this.email = email;
         this.password = password;
+        this.voteHistory = new ArrayList<>();
     }
 
     /**
@@ -51,8 +55,8 @@ public class User {
      * @param name,username of user
      * @return matched User if any
      */
-    public static User findByUsername(String name) {
-        return users().findOne("{username: #}", name).as(User.class);
+    public static User findByEmail(String name) {
+        return users().findOne("{email: #}", name).as(User.class);
     }
 
     /**
@@ -82,5 +86,9 @@ public class User {
             return false;
         }
         return true;
+    }
+
+    public Boolean voted(String ballotId) {
+        return this.voteHistory.contains(ballotId);
     }
 }

@@ -28,9 +28,11 @@
                 <p>@ballot.description</p>
               </div>
               <div class="panel-footer">
-                <a class="btn btn-primary" href="/ballot/@ballot.id">Add Vote</a>
+                <a class="btn btn-primary" href="@routes.Application.ballotVote(ballot.id.toString(), true)"><i class="fa fa-thumbs-up"></i> UpVote</a>
+                <a class="btn btn-primary" href="@routes.Application.ballotVote(ballot.id.toString(), false)"><i class="fa fa-thumbs-up"></i> DownVote</a>
                 Vote Count <span class="badge">@ballot.voteCount</span><br>
-                <div class="text-center"> Created by @ballot.ownerUsername</div></div>
+<!--                 <div class="text-center"> Created by @ballot.ownerUsername</div> -->
+                </div>
             </div>
           </div>
         </div>

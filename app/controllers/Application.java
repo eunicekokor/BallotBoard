@@ -16,6 +16,7 @@ import views.html.*;
 public class Application extends Controller {
 
     private String currentUser = "";
+    private User userObject = null;
     /**
      * Handles requests to /login route
      * @return login form
@@ -47,6 +48,7 @@ public class Application extends Controller {
         if (loginForm.hasErrors()) {
             return badRequest(login.render(loginForm));
         } else {
+            userObject = User.findByEmail(loginForm.get().email);
             session().clear();
             session("email", loginForm.get().email);
             currentUser = loginForm.get().email;
@@ -70,6 +72,7 @@ public class Application extends Controller {
             newUser.create(signUpForm.get().username, signUpForm.get().fullname,
                     signUpForm.get().email, signUpForm.get().password);
             newUser.insert();
+            userObject = User.findByEmail(signUpForm.get().email);
             session().clear();
             // session("username", signUpForm.get().username);
             session("email", signUpForm.get().email);
@@ -159,6 +162,23 @@ public class Application extends Controller {
         return ok(ballotView.render(Ballot.findById(ballotId), currentUser));
     }
 
+    @Security.Authenticated(Secured.class)
+    public Result ballotVote(String id, Boolean vote) {
+        if (!userObject.voted(id)) {
+            ObjectId ballotId = new ObjectId(id);
+            Ballot.vote(ballotId, vote);
+            userObject.voteHistory.add(id);
+        }
+
+        return redirect(
+            routes.Application.ballotView(id));
+        // in this post we are getting the ballot id and the user and
+        // our goal is to increment the vote count of b.id if the user hasn't voted
+        // on this ballot id (it's not in the list of votehistory)
+        // and then subsequently to add this ballot id to the votehistory list
+        // optional: error message
+    }
+
     /**
      * Form that holds login email and password
      */
@@ -216,4 +236,5 @@ public class Application extends Controller {
             return null;
         }
     }
+
 }
