@@ -20,7 +20,8 @@ body {
     -moz-box-shadow: 0 0 5px 1px #616161;
     box-shadow: 0 0 5px 1px #616161;
     padding-bottom: 30px;
-    width: auto;
+    width: 50%;
+    margin: 0 auto;
 }
 
 .navbar-header{

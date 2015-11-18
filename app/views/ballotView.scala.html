@@ -27,7 +27,10 @@
               <div class="panel-body">
                 <p>@ballot.description</p>
               </div>
-              <div class="panel-footer">Vote Count <span class="badge">@ballot.voteCount</span> Created by @ballot.ownerUsername</div>
+              <div class="panel-footer">
+                <a class="btn btn-primary" href="/ballot/@ballot.id">Add Vote</a>
+                Vote Count <span class="badge">@ballot.voteCount</span><br>
+                <div class="text-center"> Created by @ballot.ownerUsername</div></div>
             </div>
           </div>
         </div>
