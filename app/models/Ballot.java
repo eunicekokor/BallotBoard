@@ -79,7 +79,7 @@ public class Ballot {
     public static List<Ballot> findAll() {
         MongoCursor<Ballot> cursor = ballots().find("{}").as(Ballot.class);
 
-        List<Ballot> ballotCollection = new ArrayList<Ballot>();
+        List<Ballot> ballotCollection = new ArrayList<>();
 
         for (Ballot b: cursor) {
             ballotCollection.add(b);
