@@ -9,6 +9,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class User {
 
@@ -80,7 +81,7 @@ public class User {
         // DBObject updateQuery = new BasicDBObject("$push", listItem);
         // DBObject find = new BasicDBObject("_id", userObjId);
         // users().update("{_id}", updateQuery.toString());
-        users().update("{_id: #}", userObjId.id).with("{$addToSet:{voteHistory: #}}", ballotid);
+        users().update("{_id: #}", userObjId.id).with("{$push:{voteHistory: #}}", ballotid);
         //{$addToSet:{bodyParameters:#}}
     }
 
@@ -101,7 +102,8 @@ public class User {
     }
 
     public Boolean voted(String ballotId) {
-        System.out.println(ballotId);
+        // If the user has voted, return true
+        // If the user has not voted, returns false
         return (this.voteHistory.contains(ballotId));
     }
 }

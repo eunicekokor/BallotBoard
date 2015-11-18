@@ -114,8 +114,9 @@ public class Application extends Controller {
             Ballot tmp = new Ballot();
             tmp.create(bForm.get().ballotName, bForm.get().description, request().username());
             tmp.insert();
+            Ballot tmp2 = Ballot.findAll().get((Ballot.findAll()).size()-1);
             return redirect(
-                    routes.Application.ballot()
+                    routes.Application.ballotView(tmp2.id.toString())
             );
         }
     }
@@ -162,19 +163,23 @@ public class Application extends Controller {
     public Result ballotView(String id) {
         currentUser = session("email");
         ObjectId ballotId = new ObjectId(id);
-        return ok(ballotView.render(Ballot.findById(ballotId), currentUser));
+        return ok(ballotView.render(Ballot.findById(ballotId), currentUser, ""));
     }
 
     @Security.Authenticated(Secured.class)
     public Result ballotVote(String id, Boolean vote) {
-        if (userObject == null){
-            userObject = User.findByEmail(session("email"));
-        }
+        
+        userObject = User.findByEmail(session("email"));
+
+        ObjectId ballotId = new ObjectId(id);
+
         if (!userObject.voted(id)) {
-            ObjectId ballotId = new ObjectId(id);
             Ballot.vote(ballotId, vote);
             User.add(userObject, id);
-
+        }
+        else {
+            currentUser = session("email");
+            return ok(ballotView.render(Ballot.findById(ballotId), currentUser, "Sorry. You have already voted."));
         }
 
         return redirect(
