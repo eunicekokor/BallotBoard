@@ -24,16 +24,22 @@
     <section class="content">
   <div class="container">
       <div class="jumbotron">
+      <h1> All Ballots </h1>
           <div class="row">
               @for(b <- ballots) {
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                       <div class="panel panel-default">
-                          <div class="panel-heading"><a href="/ballot/@b.id">@b.ballotName</a></div>
+                          <div class="panel-heading"><a href="/ballot/@b.id"><h4>@b.ballotName</h4></a></div>
                           <div class="panel-body">
                               <p>@b.description</p>
                           </div>
-                          <div class="panel-footer">Vote Count <span class="badge">@b.voteCount</span>
-                            <a class="btn btn-primary" href="/ballot/@b.id">Click to Vote</a></div>
+                          <div class="panel-footer text-left">
+                            <a class="btn btn-mini" href="/ballot/@b.id">Click to Vote</a>
+                            <span class="col-sm-offset-3">Vote Count 
+                            <span class="badge">@b.voteCount
+                            </span></span>
+                          </div>
+                            
                       </div>
                   </div>
               }

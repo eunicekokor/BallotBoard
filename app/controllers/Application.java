@@ -51,6 +51,7 @@ public class Application extends Controller {
             userObject = User.findByEmail(loginForm.get().email);
             session().clear();
             session("email", loginForm.get().email);
+            session("userObject", userObject.toString());
             currentUser = loginForm.get().email;
             return redirect(
                     routes.Application.ballot()
@@ -143,7 +144,9 @@ public class Application extends Controller {
      */
     @Security.Authenticated(Secured.class)
     public Result user() {
-        return ok(profile.render(Ballot.findAll(), Ballot.findAll(), request().username()));
+        currentUser = session("email");
+        userObject = User.findByEmail(currentUser);
+        return ok(profile.render(Ballot.findAll(), Ballot.findAll(), request().username(), userObject));
     }
 
     public Result ballot() {
@@ -164,10 +167,14 @@ public class Application extends Controller {
 
     @Security.Authenticated(Secured.class)
     public Result ballotVote(String id, Boolean vote) {
+        if (userObject == null){
+            userObject = User.findByEmail(session("email"));
+        }
         if (!userObject.voted(id)) {
             ObjectId ballotId = new ObjectId(id);
             Ballot.vote(ballotId, vote);
-            userObject.voteHistory.add(id);
+            User.add(userObject, id);
+
         }
 
         return redirect(

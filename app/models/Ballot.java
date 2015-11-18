@@ -44,6 +44,8 @@ public class Ballot {
     public static void vote(ObjectId ballotId, Boolean upVote) {
         if (upVote) {
             ballots().update("{_id: #}", ballotId).with("{$inc: {voteCount: 1}}");
+            // "{$addToSet: {voteHistory: ballotid}}"
+            // "{$inc: {voteCount: 1}}"
         } else {
             ballots().update("{_id: #}", ballotId).with("{$inc: {voteCount: -1}}");
         }

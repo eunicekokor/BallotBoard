@@ -21,17 +21,16 @@
     <div class="container">
       <div class="jumbotron">
         <div class="row">
-           <div class="col-md-4 col-md-offset-4">
+           <div class="col-lg-8 col-lg-offset-2">
             <div class="panel panel-default">
-              <div class="panel-heading">@ballot.ballotName</div>
+              <div class="panel-heading"><h1>@ballot.ballotName</h1></div>
               <div class="panel-body">
                 <p>@ballot.description</p>
               </div>
-              <div class="panel-footer">
+              <div class="panel-footer text-left">
                 <a class="btn btn-primary" href="@routes.Application.ballotVote(ballot.id.toString(), true)"><i class="fa fa-thumbs-up"></i> UpVote</a>
-                <a class="btn btn-primary" href="@routes.Application.ballotVote(ballot.id.toString(), false)"><i class="fa fa-thumbs-up"></i> DownVote</a>
-                Vote Count <span class="badge">@ballot.voteCount</span><br>
-<!--                 <div class="text-center"> Created by @ballot.ownerUsername</div> -->
+                <a class="btn btn-primary" href="@routes.Application.ballotVote(ballot.id.toString(), false)"><i class="fa fa-thumbs-up"></i> DownVote</a><span class="col-sm-offset-6">
+                Vote Count <span class="badge">@ballot.voteCount</span></span>
                 </div>
             </div>
           </div>

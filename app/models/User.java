@@ -5,6 +5,9 @@ import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 import uk.co.panaxiom.playjongo.*;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+
 import java.util.ArrayList;
 
 public class User {
@@ -72,6 +75,15 @@ public class User {
         return true;
     }
 
+    public static void add(User userObjId, String ballotid){
+        // DBObject listItem = new BasicDBObject("voteHistory", new BasicDBObject("id",ballotid));
+        // DBObject updateQuery = new BasicDBObject("$push", listItem);
+        // DBObject find = new BasicDBObject("_id", userObjId);
+        // users().update("{_id}", updateQuery.toString());
+        users().update("{_id: #}", userObjId.id).with("{$addToSet:{voteHistory: #}}", ballotid);
+        //{$addToSet:{bodyParameters:#}}
+    }
+
     /**
      * Checks if an email or username if already taken
      * @param email
@@ -89,6 +101,7 @@ public class User {
     }
 
     public Boolean voted(String ballotId) {
-        return this.voteHistory.contains(ballotId);
+        System.out.println(ballotId);
+        return (this.voteHistory.contains(ballotId));
     }
 }

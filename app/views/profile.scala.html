@@ -1,4 +1,4 @@
-@(createdBallots: List[Ballot], voteHistory: List[Ballot], user: String)
+@(createdBallots: List[Ballot], voteHistory: List[Ballot], user: String, user_obj: User)
 
 @main("Profile") {
 
@@ -43,6 +43,7 @@
         <div class="jumbotron">
             <div class="row">
             @for(b <- createdBallots) {
+              @if(user_obj.voted(b.id.toString())) {
                 <div class="col-md-3">
                     <div class="panel panel-default">
                         <div class="panel-heading">@b.ballotName</div>
@@ -52,6 +53,7 @@
                         <div class="panel-footer">Vote Count <span class="badge">@b.voteCount</span></div>
                     </div>
                 </div>
+                }
             }
             </div>
         </div>
