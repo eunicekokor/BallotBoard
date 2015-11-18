@@ -26,11 +26,11 @@
             @if(b.ownerUsername.equals(user)){
               <div class="col-md-3">
                   <div class="panel panel-default">
-                      <div class="panel-heading">@b.ballotName</div>
+                      <div class="panel-heading"><a href="/ballot/@b.id">@b.ballotName</a></div>
                       <div class="panel-body">
                           <p>@b.description</p>
                       </div>
-                      <div class="panel-footer">Vote Count <span class="badge">@b.voteCount</span></div>
+                      <div class="text-right panel-footer">Vote Count <span class="badge">@b.voteCount</span></div>
                   </div>
               </div>
               }
@@ -46,11 +46,11 @@
               @if(user_obj.voted(b.id.toString())) {
                 <div class="col-md-3">
                     <div class="panel panel-default">
-                        <div class="panel-heading">@b.ballotName</div>
+                        <div class="panel-heading"><a href="/ballot/@b.id">@b.ballotName</a></div>
                         <div class="panel-body">
                             <p>@b.description</p>
                         </div>
-                        <div class="panel-footer">Vote Count <span class="badge">@b.voteCount</span></div>
+                        <div class="text-right panel-footer">Vote Count <span class="badge">@b.voteCount</span></div>
                     </div>
                 </div>
                 }

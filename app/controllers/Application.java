@@ -109,7 +109,8 @@ public class Application extends Controller {
         Form<BallotForm> bForm = form(BallotForm.class).bindFromRequest();
 
         if (bForm.hasErrors()) {
-            return badRequest(ballotForm.render(bForm));
+            currentUser = session("email");
+            return badRequest(ballotForm.render(bForm, currentUser));
         } else {
             Ballot tmp = new Ballot();
             tmp.create(bForm.get().ballotName, bForm.get().description, request().username());
@@ -127,7 +128,8 @@ public class Application extends Controller {
      */
     @Security.Authenticated(Secured.class)
     public Result ballotForm() {
-        return ok(ballotForm.render(form(BallotForm.class)));
+        currentUser = session("email");
+        return ok(ballotForm.render(form(BallotForm.class), currentUser));
     }
 
     // /**
@@ -179,7 +181,7 @@ public class Application extends Controller {
         }
         else {
             currentUser = session("email");
-            return ok(ballotView.render(Ballot.findById(ballotId), currentUser, "Sorry. You have already voted."));
+            return ok(ballotView.render(Ballot.findById(ballotId), currentUser, "Sorry. You have already voted. Check out other Ballots."));
         }
 
         return redirect(

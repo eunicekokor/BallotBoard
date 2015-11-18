@@ -35,7 +35,7 @@
               @for(b <- ballots) {
                   <div class="col-md-4">
                       <div class="panel panel-default">
-                          <div class="panel-heading"><a href="/ballot/@b.id"><h4>@b.ballotName</h4></a></div>
+                          <a href="/ballot/@b.id"><div class="panel-heading"><h4>@b.ballotName</h4></a></div>
                           <div class="panel-body">
                               <p>@b.description</p>
                           </div>

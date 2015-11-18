@@ -7,11 +7,15 @@
     }
 
 body {
-    background: url(http://i.imgur.com/GHr12sH.jpg) no-repeat center center fixed;
+    background: white;
+    /*background: url(http://i.imgur.com/GHr12sH.jpg) no-repeat center center fixed;*/
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+}
+.container, .jumbotron {
+    background: inherit;
 }
 
 #form-container {
@@ -34,8 +38,9 @@ body {
     margin-bottom: 5px;
 }
 
-.contents {
+.contents{
     margin-top: 60px;
+    background: inherit;
 }
 
 .ballots{
@@ -52,7 +57,7 @@ body {
 }
 
 .bs-callout {
-    padding: 5px;
+    padding: 2.5px;
     margin: 10px 0;
     border: 1px solid #eee;
     border-left-width: 5px;
@@ -63,8 +68,33 @@ body {
 }
 
 .bs-callout-info {
-    border-left-color: #5bc0de;
+    border-left-color: #eee;
 }
+
 .bs-callout-info h4 {
     color: #5bc0de;
+}
+
+.ballot_tip {
+    font-size: .75em;
+}
+
+.bal_name, .bal_desc {
+    outline: none;
+    border-width: thin;
+    box-shadow: 1px 1px 1px #888888;
+    border-color: #888888;
+}
+
+.navbar, .navbar-default{
+    border-radius: 0 !important;
+    box-shadow: 2px 2px 1px #bbb;
+}
+
+.btn {
+    border-color: #bbb;
+}
+
+.btn:hover{
+    background: #bbb;
 }

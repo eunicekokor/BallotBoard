@@ -1,4 +1,4 @@
-@(form: Form[Application.BallotForm])
+@(form: Form[Application.BallotForm], user: String)
 
 @*********************
  * Potentially having current user on each page *
@@ -6,6 +6,22 @@
  *********************@
 
 @main("Create an Ballot") {
+
+<div class="header">
+    <div class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="">BallotBoard</a>
+          <div class="navbar-right">
+            <a href="/user"> <i class="fa fa-user"></i> @user</a>
+            <a class="btn btn-default navbar-btn" href="/create">Create Ballot</a>
+            <a class="btn btn-default navbar-btn" href="/ballot">View All Ballots</a>
+            <a class="btn btn-danger navbar-btn" href="/logout">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <section class="contents">
     <div class="container">
@@ -18,16 +34,17 @@
             @form.globalError.message
             </p>
           }
-          <div class="bs-callout bs-callout-info">
-            <h4> Make a Catchy Title </h4>
-            <p> Create an eye catching title to draw people to your cause </p>
+          <input type="text" name="ballotName" placeholder="Name of Ballot" required class="form-control input-lg bal_name"/></input>
+          <div style="display: none;" id="bal_name" class="bs-callout bs-callout-info">
+            <h5>Tip: Make a Catchy Title </h5>
+            <p class="ballot_tip"> Create an eye catching title to draw people to your cause </p>
           </div>
-          <input type="text" name="ballotName" placeholder="Name of Ballot" required class="form-control input-lg"/></input>
-          <div class="bs-callout bs-callout-info">
-            <h4> Tell your story </h4>
-            <p> Invite others into your plight </p>
+
+          <textarea style="height:100px" type="text" name="description" placeholder="Ballot Description" required class="form-control bal_desc"/></textarea>
+          <div  style="display: none;" id="bal_desc" class="bs-callout bs-callout-info">
+            <h5>Tip: Tell your story </h5>
+            <p class="ballot_tip"> Invite others into your plight </p>
           </div>
-          <textarea style="height:100px" type="text" name="description" placeholder="Ballot Description" required class="form-control"/></textarea>
           <button type="submit" name="go" class="btn btn-lg btn-primary btn-block"> Create </button>
         }
       </div>
