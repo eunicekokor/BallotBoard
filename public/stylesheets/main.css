@@ -1,20 +1,12 @@
-
-* {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    outline: none;
-    }
-
 body {
     background: white;
-    /*background: url(http://i.imgur.com/GHr12sH.jpg) no-repeat center center fixed;*/
+    background: #EEEEEE;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
 }
-.container, .jumbotron {
+.container {
     background: inherit;
 }
 
@@ -38,12 +30,7 @@ body {
     margin-bottom: 5px;
 }
 
-.contents{
-    margin-top: 60px;
-    background: inherit;
-}
-
-.ballots{
+.ballots {
     margin-top: 5px;
 }
 
@@ -88,13 +75,61 @@ body {
 
 .navbar, .navbar-default{
     border-radius: 0 !important;
-    box-shadow: 2px 2px 1px #bbb;
+    /*box-shadow: 2px 2px 1px #bbb;*/
 }
 
+.navbar > .navbar-right > a {
+    padding-left: 5px;
+    padding-right: 15px;
+}
 .btn {
-    border-color: #bbb;
+    /*border-color: #bbb;*/
 }
 
 .btn:hover{
-    background: #bbb;
+    /*background: #bbb;*/
+}
+
+.intro > h1 {
+    font-size: 72px;
+}
+
+.intro > h3 {
+    font-size: 24px;
+}
+.intro .btn {
+    width: 100%;
+}
+
+.intro {
+    margin-top: 60px;
+}
+
+.contents {
+    margin-top: 20px;
+}
+
+.jumbotron {
+    background: #ffffff;
+}
+
+.results {
+    position: relative;
+    text-align: center;
+    width: 160px;
+    height: 160px;
+    border-radius: 100%;
+}
+
+.results > h2 {
+    padding-top: 15px;
+    font-weight: bold;
+}
+
+#upvote {
+    border: 2px solid #4CAF50;
+}
+
+#downvote {
+    border: 2px solid #FF5722;
 }

@@ -7,6 +7,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayJava)
 scalaVersion := "2.11.6"
 
 libraryDependencies ++= Seq(
+  "org.mindrot" % "jbcrypt" % "0.3m",
   "uk.co.panaxiom" %% "play-jongo" % "0.9.0-jongo1.2",
   javaJdbc,
   cache,
@@ -19,3 +20,5 @@ routesGenerator := InjectedRoutesGenerator
 
 
 fork in run := false
+
+fork in run := true

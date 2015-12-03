@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 import uk.co.panaxiom.playjongo.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -36,7 +37,7 @@ public class User {
         this.username = username;
         this.fullname = fullname;
         this.email = email;
-        this.password = password;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.voteHistory = new ArrayList<>();
     }
 
@@ -70,10 +71,14 @@ public class User {
      * @return true if correct email and password and false otherwise
      */
     public static Boolean authenticate(String email, String password) {
-        if (users().findOne("{ $and: [{email: #},{password: #}]}", email, password).as(User.class) == null) {
+
+        User temp = users().findOne("{email: #}", email).as(User.class);
+
+        if (temp == null) {
             return false;
         }
-        return true;
+
+        return BCrypt.checkpw(password, temp.password);
     }
 
     public static void add(User userObjId, String ballotid){
@@ -101,9 +106,12 @@ public class User {
         return true;
     }
 
+    /**
+     * Checks if a user has voted on a ballot
+     * @param ballotId id of the ballot
+     * @return true if the user has voted, false otherwise
+     */
     public Boolean voted(String ballotId) {
-        // If the user has voted, return true
-        // If the user has not voted, returns false
         return (this.voteHistory.contains(ballotId));
     }
 }
