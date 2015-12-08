@@ -48,11 +48,9 @@ public class Application extends Controller {
         if (loginForm.hasErrors()) {
             return badRequest(login.render(loginForm));
         } else {
-            userObject = User.findByEmail(loginForm.get().email);
             session().clear();
-            session("email", loginForm.get().email);
-            session("username", userObject.fullname);
-            currentUser = loginForm.get().email;
+            currentUser = User.findByEmail(loginForm.get().email).username;
+            session("username", User.findByEmail(loginForm.get().email).username);
             return redirect(
                 routes.Application.ballot()
             );
@@ -72,7 +70,7 @@ public class Application extends Controller {
             newUser.create(signUpForm.get().username, signUpForm.get().fullname,
                     signUpForm.get().email, signUpForm.get().password);
             newUser.insert();
-            userObject = User.findByEmail(signUpForm.get().email);
+            userObject = User.findByUsername(signUpForm.get().username);
             session().clear();
             session("username", signUpForm.get().username);
             currentUser = signUpForm.get().username;
@@ -131,9 +129,9 @@ public class Application extends Controller {
      */
     @Security.Authenticated(Secured.class)
     public Result user() {
-        currentUser = session("email");
-        userObject = User.findByEmail(currentUser);
-        return ok(profile.render(Ballot.findAll(), Ballot.findAll(), request().username(), userObject));
+        currentUser = session("username");
+        userObject = User.findByUsername(currentUser);
+        return ok(profile.render(Ballot.findAll(), Ballot.findAll(), currentUser, userObject));
     }
 
     /**
@@ -156,9 +154,8 @@ public class Application extends Controller {
 
     @Security.Authenticated(Secured.class)
     public Result ballotVote(String id, Boolean vote) {
-        
-        userObject = User.findByEmail(session("email"));
 
+        userObject = User.findByUsername(session("username"));
         ObjectId ballotId = new ObjectId(id);
 
         if (!userObject.voted(id)) {
@@ -182,7 +179,7 @@ public class Application extends Controller {
 
         public String email;
         public String password;
-        
+
         public String validate() {
             if (User.authenticate(email, password)) {
                 return null;

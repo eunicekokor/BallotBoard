@@ -61,7 +61,21 @@ public class User {
      * @return matched User if any
      */
     public static User findByEmail(String name) {
-        return users().findOne("{email: #}", name).as(User.class);
+        User result = new User();
+        result = users().findOne("{email: #}", name).as(User.class);
+        if (result == null){
+          System.out.println("that email was a dud");
+        }
+        return result;
+    }
+
+    public static User findByUsername(String name) {
+        User result = new User();
+        result = users().findOne("{username: #}", name).as(User.class);
+        if (result == null){
+          System.out.println("that username was a dud");
+        }
+        return result;
     }
 
     /**

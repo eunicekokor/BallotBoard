@@ -130,6 +130,16 @@ body {
     border: 2px solid #4CAF50;
 }
 
+#upvote:hover{
+  background: #4CAF50;
+  color: white;
+}
+
 #downvote {
     border: 2px solid #FF5722;
+}
+
+#downvote:hover{
+  background: #FF5722;
+  color: white;
 }
