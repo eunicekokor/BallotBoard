@@ -85,8 +85,14 @@ public class Application extends Controller {
     /**
      * Handles request to the main page /index
      */
-    public Result index () {
+    public Result index() {
         return ok(index.render());
+    }
+
+    public Result defaultRoute(String path) {
+        return redirect(
+            routes.Application.index()
+        );
     }
 
     /**
@@ -172,7 +178,8 @@ public class Application extends Controller {
         }
 
         return redirect(
-            routes.Application.ballotView(id));
+            routes.Application.ballotView(id)
+        );
     }
 
     /**
