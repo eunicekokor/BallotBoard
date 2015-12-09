@@ -69,6 +69,13 @@ public class UserModelTest {
     });
   }
 
+  @Test
+  public void remove(){
+
+  }
+
+
+
 
 
 }
