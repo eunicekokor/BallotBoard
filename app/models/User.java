@@ -49,7 +49,7 @@ public class User {
     }
 
     /**
-     * Remove this user from db collection
+     * Remove this user from db collection - Unused
      */
     public void remove() {
         users().remove(this.id);
