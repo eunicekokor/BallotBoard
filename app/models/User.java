@@ -4,6 +4,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 import uk.co.panaxiom.playjongo.*;
+import org.mindrot.jbcrypt.BCrypt;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class User {
 
@@ -17,6 +24,7 @@ public class User {
     public String fullname;
     public String email;
     public String password;
+    public ArrayList<String> voteHistory;
 
     /**
      * Creates a new user
@@ -29,7 +37,8 @@ public class User {
         this.username = username;
         this.fullname = fullname;
         this.email = email;
-        this.password = password;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+        this.voteHistory = new ArrayList<>();
     }
 
     /**
@@ -40,7 +49,7 @@ public class User {
     }
 
     /**
-     * Remove this user from db collection
+     * Remove this user from db collection - Unused
      */
     public void remove() {
         users().remove(this.id);
@@ -51,8 +60,22 @@ public class User {
      * @param name,username of user
      * @return matched User if any
      */
+    public static User findByEmail(String name) {
+        User result = new User();
+        result = users().findOne("{email: #}", name).as(User.class);
+        if (result == null){
+          System.out.println("that email was a dud");
+        }
+        return result;
+    }
+
     public static User findByUsername(String name) {
-        return users().findOne("{username: #}", name).as(User.class);
+        User result = new User();
+        result = users().findOne("{username: #}", name).as(User.class);
+        if (result == null){
+          System.out.println("that username was a dud");
+        }
+        return result;
     }
 
     /**
@@ -62,10 +85,23 @@ public class User {
      * @return true if correct email and password and false otherwise
      */
     public static Boolean authenticate(String email, String password) {
-        if (users().findOne("{ $and: [{email: #},{password: #}]}", email, password).as(User.class) == null) {
+
+        User temp = users().findOne("{email: #}", email).as(User.class);
+
+        if (temp == null) {
             return false;
         }
-        return true;
+
+        return BCrypt.checkpw(password, temp.password);
+    }
+
+    public static void add(User userObjId, String ballotid){
+        // DBObject listItem = new BasicDBObject("voteHistory", new BasicDBObject("id",ballotid));
+        // DBObject updateQuery = new BasicDBObject("$push", listItem);
+        // DBObject find = new BasicDBObject("_id", userObjId);
+        // users().update("{_id}", updateQuery.toString());
+        users().update("{_id: #}", userObjId.id).with("{$push:{voteHistory: #}}", ballotid);
+        //{$addToSet:{bodyParameters:#}}
     }
 
     /**
@@ -82,5 +118,14 @@ public class User {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Checks if a user has voted on a ballot
+     * @param ballotId id of the ballot
+     * @return true if the user has voted, false otherwise
+     */
+    public Boolean voted(String ballotId) {
+        return (this.voteHistory.contains(ballotId));
     }
 }

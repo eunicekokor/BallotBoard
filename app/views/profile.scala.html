@@ -1,4 +1,4 @@
-@(createdBallots: List[Ballot], voteHistory: List[Ballot], user: String)
+@(createdBallots: List[Ballot], voteHistory: List[Ballot], user: String, user_obj: User)
 
 @main("Profile") {
 
@@ -8,9 +8,10 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="">BallotBoard</a>
                     <div class="navbar-right">
-                        <a class="btn btn-danger" href="/create">Create Ballot</a>
-                        <a href="/user"> @user</a>
-                        <a class="btn btn-default" href="/logout">Logout</a>
+                        <a class="btn btn-default" href="/ballot">View Ballots</a>
+                        <a class="btn btn-default" href="/create">Create Ballot</a>
+                        <a href="/user"><i class="fa fa-user"></i> @user</a>
+                        <a class="btn btn-default navbar-btn" href="/logout"><i class="fa fa-sign-out"></i> Logout</a>
                     </div>
                 </div>
             </div>
@@ -22,15 +23,17 @@
         <div class="jumbotron">
           <div class="row">
           @for(b <- createdBallots) {
+            @if(b.ownerUsername.equals(user)){
               <div class="col-md-3">
                   <div class="panel panel-default">
-                      <div class="panel-heading">@b.ballotName</div>
+                      <div class="panel-heading"><a href="/ballot/@b.id">@b.ballotName</a></div>
                       <div class="panel-body">
                           <p>@b.description</p>
                       </div>
-                      <div class="panel-footer">Vote Count <span class="badge">@b.voteCount</span></div>
+                      <div class="text-right panel-footer">Vote Count <span class="badge">@b.voteCount</span></div>
                   </div>
               </div>
+              }
           }
           </div>
         </div>
@@ -40,15 +43,17 @@
         <div class="jumbotron">
             <div class="row">
             @for(b <- createdBallots) {
+              @if(user_obj.voted(b.id.toString())) {
                 <div class="col-md-3">
                     <div class="panel panel-default">
-                        <div class="panel-heading">@b.ballotName</div>
+                        <div class="panel-heading"><a href="/ballot/@b.id">@b.ballotName</a></div>
                         <div class="panel-body">
                             <p>@b.description</p>
                         </div>
-                        <div class="panel-footer">Vote Count <span class="badge">@b.voteCount</span></div>
+                        <div class="text-right panel-footer">Vote Count <span class="badge">@b.voteCount</span></div>
                     </div>
                 </div>
+                }
             }
             </div>
         </div>

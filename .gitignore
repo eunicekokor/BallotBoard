@@ -10,3 +10,4 @@ target
 /RUNNING_PID
 *.iml
 *.sbtserver
+build.sbt

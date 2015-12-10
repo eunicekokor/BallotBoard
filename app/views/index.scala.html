@@ -1,15 +1,18 @@
-@(message: String)
-
 @main("BallotBoard") {
-
-    <section class="contents">
-        <div class="jumbotron">
-            <div class="container">
-                <h1 class="text-center">Welcome to BallotBoard</h1>
-                <h3 class="text-center">Create and vote on Ballots of any kind.</h3>
-                <p class="text-center"><a class="btn btn-primary btn-lg" href="/user" role="button"> Sign In </a></p>
-                <p class="text-center"> or </p>
-                <p class="text-center"><a class="btn btn-primary btn-lg" href="/ballot" role="button"> View Ballots </a></p>
+    <section class="intro">
+        <h1 class="text-center">Welcome to BallotBoard</h1>
+        <div class="container">
+            <h3 class="text-center">Create and vote on Ballots of any kind.</h3>
+            <br>
+            <div class="col-md-4 col-md-offset-4">
+                <p class="text-center">
+                    <a class="btn btn-primary btn-lg" href="/user" role="button">Sign In</a>
+                </p>
+            </div>
+            <div class="col-md-4 col-md-offset-4">
+                <h4 class="text-center">Don't have an account? <a href="/signup">Sign up here</a></h4>
+                <br>
+                <p class="text-center"><a class="btn btn-primary btn-lg" href="/ballot" role="button">View Ballots</a></p>
             </div>
         </div>
     </section>

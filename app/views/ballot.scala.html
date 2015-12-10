@@ -1,19 +1,19 @@
 @(ballots: List[Ballot], user: String)
 
 @main("Ballot") {
-
   <div class="header">
     <div class="navbar navbar-default" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="">BallotBoard</a>
+            <a class="navbar-brand" href="/">BallotBoard</a>
             <div class="navbar-right">
-                <a class="btn btn-danger navbar-btn" href="/create">Create Ballot</a>
                 @if(!user.equals("")) {
-                    <li><a href="/user"><span class="glyphicon glyphicon-user"> @user </span></a></li>
-                    <a class="btn btn-default navbar-btn" href="/logout">Logout</a>
+                    <a class="btn btn-danger navbar-btn" href="/create">Create Ballot</a>
+                    <a href="/user"><i class="fa fa-user"></i> @user</a>
+                    <a class="btn btn-default navbar-btn" href="/logout"><i class="fa fa-sign-out"></i> Logout</a>
                 } else {
                     <a class="btn btn-primary navbar-btn" href="/login">Sign In</a>
+                    <a class="btn btn-primary navbar-btn" href="/signup">Sign Up</a>
                 }
             </div>
         </div>
@@ -21,23 +21,35 @@
     </div>
   </div>
     <section class="content">
-  <div class="container">
-      <div class="jumbotron">
-          <div class="row">
-              @for(b <- ballots) {
-                  <div class="col-md-3">
-                      <div class="panel panel-default">
-                          <div class="panel-heading">@b.ballotName</div>
-                          <div class="panel-body">
-                              <p>@b.description</p>
+      <div class="container">
+          <div class="jumbotron">
+          <h1 class="text-left"> All Ballots </h1>
+          <blockquote class="bs-callout-quote text-left">
+            <p>When the whole world is silent, even one voice becomes powerful</p>
+            <footer>Malala Yousafzai</footer>
+          </blockquote>
+          <div class="ballots container">
+              <div class="row">
+                  @for(b <- ballots) {
+                      <div class="col-md-4">
+                          <div class="panel panel-default">
+                              <a href="/ballot/@b.id"><div class="panel-heading"><h4>@b.ballotName</h4></div></a>
+                              <div class="panel-body">
+                                  <p>@b.description</p>
+                              </div>
+                              <div class="panel-footer text-left">
+                                <a class="btn btn-mini" href="/ballot/@b.id">Click to Vote</a>
+                                <span class="col-sm-offset-2">Vote Count
+                                <span class="badge">@b.voteCount
+                                </span></span>
+                              </div>
+
                           </div>
-                          <div class="panel-footer">Vote Count <span class="badge">@b.voteCount</span>
-                            <a class="btn btn-primary" href="/ballot/@b.id">Vote</a></div>
                       </div>
-                  </div>
-              }
+                  }
+              </div>
+          </div>
           </div>
       </div>
-  </div>
     </section>
 }

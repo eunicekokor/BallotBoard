@@ -22,6 +22,8 @@ public class Ballot {
     public String description;
     public String ownerUsername;
     public int voteCount;
+    public int upvotes;
+    public int downvotes;
 
     /**
      * Creates a new Ballot
@@ -33,7 +35,7 @@ public class Ballot {
         this.ballotName = ballotName;
         this.description = description;
         this.ownerUsername = ownerUsername;
-        voteCount = 0;
+        voteCount = upvotes = downvotes = 0;
     }
 
     /**
@@ -41,11 +43,13 @@ public class Ballot {
      * @param ballotId id of the Ballot to upvote/downvote
      * @param upvote true for upvote, false for downvote
      */
-    public void vote(ObjectId ballotId, Boolean upVote) {
+    public static void vote(ObjectId ballotId, Boolean upVote) {
         if (upVote) {
             ballots().update("{_id: #}", ballotId).with("{$inc: {voteCount: 1}}");
+            ballots().update("{_id: #}", ballotId).with("{$inc: {upvotes: 1}}");
         } else {
             ballots().update("{_id: #}", ballotId).with("{$inc: {voteCount: -1}}");
+            ballots().update("{_id: #}", ballotId).with("{$inc: {downvotes: 1}}");
         }
     }
 

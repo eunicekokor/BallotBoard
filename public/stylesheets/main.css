@@ -1,17 +1,13 @@
-
-* {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    outline: none;
-    }
-
 body {
-    background: url(http://i.imgur.com/GHr12sH.jpg) no-repeat center center fixed;
+    background: white;
+    background: #EEEEEE;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+}
+.container {
+    background: inherit;
 }
 
 #form-container {
@@ -20,7 +16,8 @@ body {
     -moz-box-shadow: 0 0 5px 1px #616161;
     box-shadow: 0 0 5px 1px #616161;
     padding-bottom: 30px;
-    width: auto;
+    width: 50%;
+    margin: 0 auto;
 }
 
 .navbar-header{
@@ -33,6 +30,116 @@ body {
     margin-bottom: 5px;
 }
 
-.contents {
+.ballots {
+    margin-top: 5px;
+}
+
+.panel{
+    box-shadow: 5px 5px 2px #888888;
+}
+
+.panel:hover{
+    box-shadow: 2px 2px 1px #888888;
+    border-width: thin;
+}
+
+.bs-callout {
+    padding: 2.5px;
+    margin: 10px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+}
+
+.bs-callout-quote {
+    border-left-color: gray;
+}
+
+.bs-callout-info {
+    border-left-color: #eee;
+}
+
+.bs-callout-info h4 {
+    color: #5bc0de;
+}
+
+.ballot_tip {
+    font-size: .75em;
+}
+
+.bal_name, .bal_desc {
+    outline: none;
+    border-width: thin;
+    box-shadow: 1px 1px 1px #888888;
+    border-color: #888888;
+}
+
+.navbar, .navbar-default{
+    border-radius: 0 !important;
+    /*box-shadow: 2px 2px 1px #bbb;*/
+}
+
+.navbar > .navbar-right > a {
+    padding-left: 5px;
+    padding-right: 15px;
+}
+.btn {
+    /*border-color: #bbb;*/
+}
+
+.btn:hover{
+    /*background: #bbb;*/
+}
+
+.intro > h1 {
+    font-size: 72px;
+}
+
+.intro > h3 {
+    font-size: 24px;
+}
+.intro .btn {
+    width: 100%;
+}
+
+.intro {
     margin-top: 60px;
+}
+
+.contents {
+    margin-top: 20px;
+}
+
+.jumbotron {
+    background: #ffffff;
+}
+
+.results {
+    position: relative;
+    text-align: center;
+    width: 160px;
+    height: 160px;
+    border-radius: 100%;
+}
+
+.results > h2 {
+    padding-top: 15px;
+    font-weight: bold;
+}
+
+#upvote {
+    border: 2px solid #4CAF50;
+}
+
+#upvote:hover{
+  background: #4CAF50;
+  color: white;
+}
+
+#downvote {
+    border: 2px solid #FF5722;
+}
+
+#downvote:hover{
+  background: #FF5722;
+  color: white;
 }
