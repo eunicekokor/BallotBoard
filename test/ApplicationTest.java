@@ -1,67 +1,87 @@
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
 import static play.mvc.Http.Status.OK;
-import static play.test.Helpers.GET;
-import static play.test.Helpers.contentAsString;
-import static play.test.Helpers.route;
+import static play.test.Helpers.*;
 
-import java.util.ArrayList;
-
-import com.google.common.collect.ImmutableMap;
 import org.junit.Test;
+import org.jongo.MongoCollection;
 
+import play.Application;
 import play.mvc.Result;
+import play.mvc.Http;
 import play.test.FakeApplication;
-import play.test.Helpers;
-import play.test.WithApplication;
 import play.twirl.api.Content;
 
 import controllers.*;
 import models.*;
 
-
-public class ApplicationTest extends WithApplication {
+public class ApplicationTest {
     
     @Test
-    public void testIndex() {
-        Result result = new Application().index();
-        assertEquals(OK, result.status());
-        assertEquals("text/html", result.contentType());
-        assertEquals("utf-8", result.charset());
-        assertTrue(contentAsString(result).contains("Create and vote on Ballots"));
+    public void indexRoute() {
+        running(fakeApplication(), new Runnable() {
+            public void run() {
+                Result result = route(controllers.routes.Application.index());
+                assertEquals(OK, result.status());
+                assertEquals("text/html", result.contentType());
+                assertEquals("utf-8", result.charset());
+                assertTrue(contentAsString(result).contains("Create and vote on Ballots"));
+            }
+        });
     }
 
     @Test
-    public void testLoginRoute() {
-        Result result = route(controllers.routes.Application.login());
-        assertEquals(OK, result.status());
-        assertEquals("text/html", result.contentType());
-        assertEquals("utf-8", result.charset());
-        assertTrue(contentAsString(result).contains("Create Account"));
+    public void loginRoute() {
+        running(fakeApplication(), new Runnable() {
+            public void run() {
+                Result result = route(controllers.routes.Application.login());
+                assertEquals(OK, result.status());
+                assertEquals("text/html", result.contentType());
+                assertEquals("utf-8", result.charset());
+                assertTrue(contentAsString(result).contains("Create Account"));
+            }
+        });
     }
 
     @Test
-    public void testLogoutRoute() {
-        Result result = route(controllers.routes.Application.logout());
-        assertEquals(303, result.status()); // Redirects user to login page (status code 303)
-        assertEquals(null, result.contentType());
-        assertEquals(null, result.charset());
+    public void logoutRoute() {
+        running(fakeApplication(), new Runnable() {
+            public void run() {
+                Result result = route(controllers.routes.Application.logout());
+                assertEquals(303, result.status());
+                assertEquals(null, result.contentType());
+                assertEquals(null, result.charset());
+                assertEquals("/login", result.redirectLocation());
+            }
+        });
     }
 
     @Test
-    public void testSignupRoute() {
-        Result result = route(controllers.routes.Application.signup());
-        assertEquals(OK, result.status());
+    public void signupRoute() {
+        running(fakeApplication(), new Runnable() {
+            public void run() {
+                Result result = route(controllers.routes.Application.signup());
+                assertEquals(OK, result.status());
+                assertEquals("text/html", result.contentType());
+                assertEquals("utf-8", result.charset());
+                assertTrue(contentAsString(result).contains("Register"));
+            }
+        });
     }
 
     @Test
-    public void testBallotRoute() {
-        Result result = route(controllers.routes.Application.ballot());
-        assertEquals(OK, result.status());
+    public void ballotRoute() {
+        running(fakeApplication(), new Runnable() {
+            public void run() {
+                Result result = route(controllers.routes.Application.ballot());
+                assertEquals(OK, result.status());
+                assertEquals("text/html", result.contentType());
+                assertEquals("utf-8", result.charset());
+                assertTrue(contentAsString(result).contains("All Ballots"));
+            }
+        });
     }
 
     /**
@@ -69,51 +89,77 @@ public class ApplicationTest extends WithApplication {
      * thus expected status code is 303
      */
     @Test
-    public void testUserRoute() {
-        Result result = route(controllers.routes.Application.user());
-        assertEquals(303, result.status());
+    public void userRoute() {
+        running(fakeApplication(), new Runnable() {
+            public void run() {
+                Result result = route(controllers.routes.Application.user());
+                assertEquals(303, result.status()); 
+                assertEquals("/login", result.redirectLocation());
+            }
+        });
     }
 
     @Test
-    public void testBallotViewRoute() {
-        Result result = route(controllers.routes.Application.ballotView("InvalidString"));
-        System.out.println(result.status());
-        assertEquals(303, result.status());
+    public void ballotViewRoute() {
+        running(fakeApplication(), new Runnable() {
+            public void run() {
+                Result result = route(controllers.routes.Application.ballotView("Invalid-Ballot-ID"));
+                assertEquals(303, result.status()); 
+                assertEquals("/login", result.redirectLocation());
+            }
+        });
     }
 
+    @Test
+    public void ballotCreationRoute() {
+        running(fakeApplication(), new Runnable() {
+            public void run() {
+                Result result = route(controllers.routes.Application.ballotForm());
+                assertEquals(303, result.status()); 
+                assertEquals("/login", result.redirectLocation());
+            }
+        });
+    }
+
+    /**
+     * Any undefined route should be redirected to the index page
+     */
+    @Test
+    public void undefinedRoute() {
+        running(fakeApplication(), new Runnable() {
+            public void run() {
+                Http.RequestBuilder request = new Http.RequestBuilder();
+                request.method("GET");
+                request.uri("/invalidroute");
+                Result result = route(request);
+                assertEquals(303, result.status());
+                assertEquals("/", result.redirectLocation());
+            }
+        });
+    }
+
+
+    @Test
+    public void userLogin() {
+        running(fakeApplication(), new Runnable() {
+            public void run() {
+                User user = new User();
+                user.create("Fake", "fake", "fake@test.com", "123");
+                user.insert();
+
+                Map<String, String> login = new HashMap();
+                login.put("email", "fake@test.com");
+                login.put("password", "123");
+
+                Http.RequestBuilder request = new Http.RequestBuilder();
+                request.method("POST");
+                request.uri("/login");
+                request.bodyForm(login);
+
+                Result result = route(request);
+                assertEquals(303, result.status());
+                assertEquals("/ballot", result.redirectLocation());
+            }
+        });
+    }
 }
-
-
-/*
-GET     /                  controllers.Application.index()                 DONE
-
-GET     /login             controllers.Application.login()                 DONE
-
-POST    /login             controllers.Application.authenticate()
-
-GET     /signup            controllers.Application.signup()                DONE
-
-POST    /signup            controllers.Application.register()
-
-GET     /user              controllers.Application.user()                  DONE
-
-GET     /ballot            controllers.Application.ballot()                DONE
-
-GET     /ballot/:id        controllers.Application.ballotView(id: String)  DONE
-
-GET     /create            controllers.Application.ballotForm()
-
-POST    /create            controllers.Application.create()
-
-GET     /logout            controllers.Application.logout()                DONE
-
-GET     /ballot/:id/:vote  controllers.Application.ballotVote(id: String, vote: Boolean)
-
-
-TODO create fake posts requests
-     try non-existent routes
-
-
-
-
-*/
