@@ -6,6 +6,13 @@ body {
     -o-background-size: cover;
     background-size: cover;
 }
+.star-normal{
+  color: gray;
+}
+
+.star-favorite{
+  color: yellow;
+}
 .container {
     background: inherit;
 }

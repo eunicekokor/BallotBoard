@@ -1,4 +1,4 @@
-@(ballots: List[Ballot], user: String)
+@(ballots: List[Ballot], user: String, userObj: User)
 
 @main("Ballot") {
   <div class="header">
@@ -39,9 +39,14 @@
                               </div>
                               <div class="panel-footer text-left">
                                 <a class="btn btn-mini" href="/ballot/@b.id">Click to Vote</a>
-                                <span class="col-sm-offset-2">Vote Count
-                                <span class="badge">@b.voteCount
-                                </span></span>
+
+                                  @if(userObj.isFavorite(b.id.toString())){
+                                    <span class="col-sm-offset-2"><i class="fa fa-star-o star-favorite"></i></span>
+                                  } else {
+                                <span class="col-sm-offset-2"><i class="fa fa-star-o star-normal"></i></span>
+                                }
+
+
                               </div>
 
                           </div>

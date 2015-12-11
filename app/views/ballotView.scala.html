@@ -1,4 +1,4 @@
-@(ballot: Ballot, user: String, message: String)
+@(ballot: Ballot, user: String, message: String, userObj: User)
 
 @main("View Ballot") {
   <div class="header">
@@ -29,7 +29,12 @@
               <div class="panel-footer text-left">
                 <a class="btn btn-primary" href="@routes.Application.ballotVote(ballot.id.toString(), true)"><i class="fa fa-thumbs-up"></i> UpVote</a>
                 <a class="btn btn-primary" href="@routes.Application.ballotVote(ballot.id.toString(), false)"><i class="fa fa-thumbs-down"></i> DownVote</a><span class="col-sm-offset-6">
-                Vote Count <span class="badge">@ballot.voteCount</span></span>
+                @if(userObj.isFavorite(ballot.id.toString())){
+                  UnFavorite <a href="@routes.Application.ballotFavorite(ballot.id.toString())"> <i class="fa fa-star-o star-favorite"></i> </a>
+                } else{
+                  Favorite <a href="@routes.Application.ballotFavorite(ballot.id.toString())"><i class="fa fa-star-o star-normal"></i></a>
+                }
+
               </div>
               <a href="@routes.Application.ballot()"><div class="text-danger text-center bg-warning" style="padding:0">@message</div></a>
             </div>

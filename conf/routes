@@ -27,7 +27,10 @@ POST    /create                     controllers.Application.create()
 GET     /logout                     controllers.Application.logout()
 
 # Vote on Ballot
-GET 	/ballot/:id/:vote 			controllers.Application.ballotVote(id: String, vote: Boolean)
+GET 	/ballot/:id/:vote 			      controllers.Application.ballotVote(id: String, vote: Boolean)
+
+# Favorite a Ballot
+GET /favorite/:id           controllers.Application.ballotFavorite(id: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

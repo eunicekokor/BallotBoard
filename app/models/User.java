@@ -25,6 +25,8 @@ public class User {
     public String email;
     public String password;
     public ArrayList<String> voteHistory;
+    public ArrayList<String> favoriteHistory;
+    public ArrayList<String> notifications;
 
     /**
      * Creates a new user
@@ -39,6 +41,8 @@ public class User {
         this.email = email;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.voteHistory = new ArrayList<>();
+        this.favoriteHistory = new ArrayList<>();
+        this.notifications = new ArrayList<>();
     }
 
     /**
@@ -104,6 +108,26 @@ public class User {
         //{$addToSet:{bodyParameters:#}}
     }
 
+    public static void addFavorite(User userObjId, String ballotid){
+        // DBObject listItem = new BasicDBObject("voteHistory", new BasicDBObject("id",ballotid));
+        // DBObject updateQuery = new BasicDBObject("$push", listItem);
+        // DBObject find = new BasicDBObject("_id", userObjId);
+        // users().update("{_id}", updateQuery.toString());
+        users().update("{_id: #}", userObjId.id).with("{$push:{favoriteHistory: #}}", ballotid);
+        //{$addToSet:{bodyParameters:#}}
+    }
+
+    public static void removeFavorite(User userObjId, String ballotid){
+        // DBObject listItem = new BasicDBObject("voteHistory", new BasicDBObject("id",ballotid));
+        // DBObject updateQuery = new BasicDBObject("$push", listItem);
+        // DBObject find = new BasicDBObject("_id", userObjId);
+        // users().update("{_id}", updateQuery.toString());
+        users().update("{_id: #}", userObjId.id).with("{$pull:{favoriteHistory: #}}", ballotid);
+        //{$addToSet:{bodyParameters:#}}
+    }
+
+
+
     /**
      * Checks if an email or username if already taken
      * @param email
@@ -124,6 +148,16 @@ public class User {
      * @return true if the user has voted, false otherwise
      */
     public Boolean voted(String ballotId) {
+      if (this == null) {
+          return false;
+        }
         return (this.voteHistory.contains(ballotId));
+    }
+
+    public Boolean isFavorite(String ballotId) {
+        if (this == null) {
+          return false;
+        }
+        return (this.favoriteHistory.contains(ballotId));
     }
 }
