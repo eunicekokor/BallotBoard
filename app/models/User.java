@@ -111,13 +111,11 @@ public class User {
      * @return true if valid, false otherwise
      */
     public static Boolean exists(String email, String username) {
-        if (users().findOne("{email: #}", email).as(User.class) == null) {
-            return false;
+        if (users().findOne("{email: #}", email).as(User.class) != null || users().findOne("{username: #}", username).as(User.class) != null) {
+            return true;
+        } else {
+          return false;
         }
-        if (users().findOne("{username: #}", username).as(User.class) == null) {
-            return false;
-        }
-        return true;
     }
 
     /**

@@ -35,14 +35,17 @@ public class UserModelTest {
   public void create(){
     running(fakeApplication(), new Runnable(){
       public void run() {
-        User _user = new User();
+          _user = new User();
           _user.create("test", "tester", "test@test.com", "pw");
-            _user.insert();
+          _user.insert();
           assertEquals(_user.username, "test");
+          _user2 = new User();
+          _user2.create("","", "", "");
+          assertEquals(_user2.username, "");
+
       }
     });
   }
-
 
   @Test
   public void findEmail(){
@@ -72,7 +75,49 @@ public class UserModelTest {
     });
   }
 
+  @Test
+  public void authenticate(){
+    running(fakeApplication(), new Runnable(){
+      public void run() {
+        User _user = new User();
+        _user.create("c", "c", "c@c.com", "right_pw");
+        _user.insert();
+        Boolean wrong_pw = User.authenticate("c@c.com", "wrong_pw");
+        Boolean right_pw = User.authenticate("c@c.com", "right_pw");
+        assertTrue(right_pw);
+        assertFalse(wrong_pw);
+      }
+    });
+  }
 
+  @Test
+  public void exists(){
+    running(fakeApplication(), new Runnable(){
+      public void run(){
+        User _user = new User();
+        _user.create("d", "d", "d@d.com", "ddddd");
+        _user.insert();
+        _user2 = User.findByEmail("d@d.com");
+
+        Boolean existing_email = User.exists(_user2.email, "fake");
+        System.out.println(existing_email);
+
+        Boolean existing_username = User.exists("fake@fake.com", _user2.username);
+        System.out.println(existing_username);
+
+        Boolean email_and_user = User.exists(_user2.email, _user2.username);
+        System.out.println(email_and_user);
+
+        Boolean not_exist = User.exists("fake@fake.com", "fake");
+        System.out.println(not_exist);
+
+        assertTrue(existing_email);
+        assertTrue(existing_username);
+        assertTrue(email_and_user);
+        assertFalse(not_exist);
+      }
+    });
+  }
 
 
 
