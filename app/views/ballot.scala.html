@@ -2,20 +2,48 @@
 
 @main("Ballot") {
   <div class="header">
-    <div class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default" role="navigation">
+
       <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="/">BallotBoard</a>
-            <div class="navbar-right">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
                 @if(!user.equals("")) {
-                    <a class="btn btn-danger navbar-btn" href="/create">Create Ballot</a>
-                    <a href="/user"><i class="fa fa-user"></i> @user</a>
-                    <a class="btn btn-default navbar-btn" href="/logout"><i class="fa fa-sign-out"></i> Logout</a>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle btn-default navbar-btn" data-toggle="dropdown" role="button" id="dropdownMenu1"  aria-haspopup="true" aria-expanded="true"><i class="fa fa-star star-favorite"></i> Favorites<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                    @for(fav_bal <- userObj.favoriteHistory){
+                      @for(bal <- ballots){
+                        @if(bal.id.toString() == fav_bal){
+                          <li><a href="/ballot/@bal.id">@bal.ballotName <i class="fa fa-arrow-up"></i>@bal.upvotes <i class="fa fa-arrow-down"></i> @bal.downvotes</a></li>
+                          <li role="separator" class="divider"></li>
+                        }
+                      }
+                    }
+                    </ul>
+                    </li>
+
+
+                    <li role="presentation"><a class="btn-default navbar-btn" href="/create"><i class="fa fa-pencil-square-o"></i> Create Ballot</a></li>
+                    <li><a class="btn-default navbar-btn" href="/user"><i class="fa fa-user"></i> @user</a></li>
+                    <li><a style="color: black"class="btn-primary navbar-btn" href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+
                 } else {
-                    <a class="btn btn-primary navbar-btn" href="/login">Sign In</a>
-                    <a class="btn btn-primary navbar-btn" href="/signup">Sign Up</a>
+                    <li><a class="btn-default navbar-btn" href="/login">Sign In</a></li>
+                    <li><a class="btn-default navbar-btn" href="/signup">Sign Up</a></li>
+
                 }
-            </div>
+
+            </ul>
+           </div>
         </div>
       </div>
     </div>
@@ -33,20 +61,24 @@
                   @for(b <- ballots) {
                       <div class="col-md-4">
                           <div class="panel panel-default">
-                              <a href="/ballot/@b.id"><div class="panel-heading"><h4>@b.ballotName</h4></div></a>
+                              <a href="/ballot/@b.id"><div class="panel-heading"><h4>@b.ballotName</h4>
+                                <span class="text-right">
+                                @if(user){
+                                  @if((userObj.isFavorite(b.id.toString()))){
+                                    <span><i class="fa fa-star star-favorite"></i></span>
+                                  } else {
+                                <span><i class="fa fa-star-o star-normal"></i></span>
+                                }
+                                }
+                              </span>
+
+                              </div></a>
+
                               <div class="panel-body">
                                   <p>@b.description</p>
                               </div>
                               <div class="panel-footer text-left">
                                 <a class="btn btn-mini" href="/ballot/@b.id">Click to Vote</a>
-
-                                  @if(userObj.isFavorite(b.id.toString())){
-                                    <span class="col-sm-offset-2"><i class="fa fa-star-o star-favorite"></i></span>
-                                  } else {
-                                <span class="col-sm-offset-2"><i class="fa fa-star-o star-normal"></i></span>
-                                }
-
-
                               </div>
 
                           </div>

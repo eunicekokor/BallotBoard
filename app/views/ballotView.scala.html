@@ -2,16 +2,25 @@
 
 @main("View Ballot") {
   <div class="header">
-    <div class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default" role="navigation">
+
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="">BallotBoard</a>
-          <div class="navbar-right">
-            <a class="btn btn-default navbar-btn" href="/create">Create Ballot</a>
-            <a class="btn btn-default navbar-btn" href="/ballot">View All Ballots</a>
-            <a href="/user"><i class="fa fa-user"></i> @user</a>
-            <a class="btn btn-default navbar-btn" href="/logout"><i class="fa fa-sign-out"></i> Logout</a>
-          </div>
+            <a class="navbar-brand" href="/">BallotBoard</a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a class="btn-default navbar-btn" href="/create">Create Ballot</a></li>
+            <li><a class="btn-default navbar-btn" href="/ballot">View All Ballots</a></li>
+            <li><a class="btn-default navbar-btn" href="/user"><i class="fa fa-user"></i> @user</a></li>
+            <li><a style="color: black" class="btn-primary navbar-btn" href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+          </ul>
         </div>
       </div>
     </div>
@@ -30,7 +39,7 @@
                 <a class="btn btn-primary" href="@routes.Application.ballotVote(ballot.id.toString(), true)"><i class="fa fa-thumbs-up"></i> UpVote</a>
                 <a class="btn btn-primary" href="@routes.Application.ballotVote(ballot.id.toString(), false)"><i class="fa fa-thumbs-down"></i> DownVote</a><span class="col-sm-offset-6">
                 @if(userObj.isFavorite(ballot.id.toString())){
-                  UnFavorite <a href="@routes.Application.ballotFavorite(ballot.id.toString())"> <i class="fa fa-star-o star-favorite"></i> </a>
+                  Unfavorite <a href="@routes.Application.ballotFavorite(ballot.id.toString())"> <i class="fa fa-star star-favorite"></i> </a>
                 } else{
                   Favorite <a href="@routes.Application.ballotFavorite(ballot.id.toString())"><i class="fa fa-star-o star-normal"></i></a>
                 }

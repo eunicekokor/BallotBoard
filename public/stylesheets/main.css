@@ -10,8 +10,16 @@ body {
   color: gray;
 }
 
+.star-favorite:hover {
+  color: gray;
+}
+
+.star-normal:hover {
+  color: #FFFF99;
+}
+
 .star-favorite{
-  color: yellow;
+  color: #FFFF99;
 }
 .container {
     background: inherit;
@@ -135,6 +143,14 @@ body {
 
 #upvote {
     border: 2px solid #4CAF50;
+}
+
+.fa-arrow-up {
+  color: #4CAF50;
+}
+
+.fa-arrow-down {
+  color: #FF5722;
 }
 
 #upvote:hover{

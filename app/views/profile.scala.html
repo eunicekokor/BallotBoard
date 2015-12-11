@@ -1,18 +1,40 @@
-@(createdBallots: List[Ballot], voteHistory: List[Ballot], user: String, user_obj: User)
+@(createdBallots: List[Ballot], voteHistory: List[Ballot], user: String, userObj: User)
 
 @main("Profile") {
 
     <div class="header">
-        <div class="navbar navbar-default" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="">BallotBoard</a>
-                    <div class="navbar-right">
-                        <a class="btn btn-default" href="/ballot">View Ballots</a>
-                        <a class="btn btn-default" href="/create">Create Ballot</a>
-                        <a href="/user"><i class="fa fa-user"></i> @user</a>
-                        <a class="btn btn-default navbar-btn" href="/logout"><i class="fa fa-sign-out"></i> Logout</a>
-                    </div>
+        <nav class="navbar navbar-default" role="navigation">
+
+      <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">BallotBoard</a>
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                    <a href="#" class="dropdown-toggle btn-default navbar-btn" data-toggle="dropdown" role="button" id="dropdownMenu1"  aria-haspopup="true" aria-expanded="true"><i class="fa fa-star star-favorite"></i> Favorites<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                    @for(fav_bal <- userObj.favoriteHistory){
+                      @for(bal <- createdBallots){
+                        @if(bal.id.toString() == fav_bal){
+                          <li><a href="/ballot/@bal.id">@bal.ballotName <i class="fa fa-arrow-up"></i>@bal.upvotes <i class="fa fa-arrow-down"></i> @bal.downvotes</a></li>
+                          <li role="separator" class="divider"></li>
+                        }
+                      }
+                    }
+                    </ul>
+                    </li>
+                        <li><a class="btn-default navbar-btn" href="/ballot">View Ballots</a></li>
+                        <li><a class="btn-default navbar-btn" href="/create"><i class="fa fa-pencil-square-o"></i> Create Ballot</a></li>
+                        <li><a class="btn-default navbar-btn" href="/user"><i class="fa fa-user"></i> @user</a></li>
+                        <li><a style="color:black" class="btn-primary navbar-btn" href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -30,7 +52,11 @@
                       <div class="panel-body">
                           <p>@b.description</p>
                       </div>
-                      <div class="text-right panel-footer">Vote Count <span class="badge">@b.voteCount</span></div>
+                      <div class="text-right panel-footer">@if(userObj.isFavorite(b.id.toString())){
+                                    <i class="fa fa-star star-favorite"></i>
+                                  } else {
+                                <i class="fa fa-star-o star-normal"></i></span>
+                                }</div>
                   </div>
               </div>
               }
@@ -43,14 +69,20 @@
         <div class="jumbotron">
             <div class="row">
             @for(b <- createdBallots) {
-              @if(user_obj.voted(b.id.toString())) {
+              @if(userObj.voted(b.id.toString())) {
                 <div class="col-md-3">
                     <div class="panel panel-default">
                         <div class="panel-heading"><a href="/ballot/@b.id">@b.ballotName</a></div>
                         <div class="panel-body">
                             <p>@b.description</p>
                         </div>
-                        <div class="text-right panel-footer">Vote Count <span class="badge">@b.voteCount</span></div>
+                        <div class="text-right panel-footer">
+                          @if(userObj.isFavorite(b.id.toString())){
+                                    <i class="fa fa-star star-favorite"></i>
+                                  } else {
+                                <i class="fa fa-star-o star-normal"></i></span>
+                                }
+                        </div>
                     </div>
                 </div>
                 }
