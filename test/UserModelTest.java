@@ -125,7 +125,6 @@ public class UserModelTest {
         String fakeBallotId = "12345";
         String realBallotId = "77777";
         _user.voteHistory.add(realBallotId);
-        System.out.println(_user.voteHistory);
         Boolean not_voted = _user.voted(fakeBallotId);
         Boolean has_voted = _user.voted(realBallotId);
         assertFalse(not_voted);
