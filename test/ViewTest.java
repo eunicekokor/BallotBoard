@@ -31,21 +31,74 @@ public class ViewTest {
 
     List<Ballot> ballotList = new ArrayList<Ballot>();
 
-    // @Test
+     @Test
 
-    // public void renderBallot(){
-    //   Content html = views.html.ballot.render(ballotList, "BALLOT");
-    //   assertEquals(contentType(html), "text/html");
-    //   assertThat(contentAsString(html)).contains("BALLOT");
-    // }
+     public void renderBallot(){
+       Content html = views.html.ballot.render(ballotList, "BALLOT");
+       assertEquals(contentType(html), "text/html");
+       String content= Helpers.contentAsString(html);
+       //System.out.println(content);
+       Assert.assertTrue(content.contains("BALLOT"));
 
-    //     @Test
+     }
 
-    // public void renderBallotView(){
-    //   Content html = views.html.ballotView.render(_ballot1, "Eunice", "message Eunice");
-    //   assertEquals(contentType(html), "text/html");
-    //   // System.out.println(contentAsString(html));
-    //   assertThat(contentAsString(html)).contains("Eunice");
-    // }
+
+  @Test
+
+     public void renderIndexView(){
+         
+
+      Content html = views.html.index.render();
+       assertEquals(contentType(html), "text/html");
+    
+    String content= Helpers.contentAsString(html);
+       //System.out.println(content);
+       Assert.assertTrue(content.contains("Welcome to BallotBoard"));
+     }
+
+
+@Test
+
+     public void renderLoginView(){
+
+        running(fakeApplication(), new Runnable(){
+      public void run() {
+               Result result = route(controllers.routes.Application.login());
+                
+                assertEquals("text/html", result.contentType());
+
+                assertTrue(contentAsString(result).contains("View All Ballots"));
+                 }
+    }); 
+
+       
+
+
+     }
+
+
+     @Test
+
+     public void renderSignUpView(){
+        running(fakeApplication(), new Runnable(){
+      public void run() {
+                Result result = route(controllers.routes.Application.signup());
+                
+                assertEquals("text/html", result.contentType());
+
+                assertTrue(contentAsString(result).contains("Register"));
+        }        
+       }); 
+       
+
+     }
+
+
+
+
+     
+
+
+      
 
 }
