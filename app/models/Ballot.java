@@ -43,13 +43,15 @@ public class Ballot {
      * @param ballotId id of the Ballot to upvote/downvote
      * @param upvote true for upvote, false for downvote
      */
-    public static void vote(ObjectId ballotId, Boolean upVote) {
+    public static Boolean vote(ObjectId ballotId, Boolean upVote) {
         if (upVote) {
             ballots().update("{_id: #}", ballotId).with("{$inc: {voteCount: 1}}");
             ballots().update("{_id: #}", ballotId).with("{$inc: {upvotes: 1}}");
+            return true;
         } else {
             ballots().update("{_id: #}", ballotId).with("{$inc: {voteCount: -1}}");
             ballots().update("{_id: #}", ballotId).with("{$inc: {downvotes: 1}}");
+            return false;
         }
     }
 
