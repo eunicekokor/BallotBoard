@@ -20,11 +20,16 @@
                         <li class="dropdown">
                     <a href="#" class="dropdown-toggle btn-default navbar-btn" data-toggle="dropdown" role="button" id="dropdownMenu1"  aria-haspopup="true" aria-expanded="true"><i class="fa fa-star star-favorite"></i> Favorites<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                    @for(fav_bal <- userObj.favoriteHistory){
+                    @for(fav_bal <- userObj.favoriteHistoryWithVotes){
                       @for(bal <- createdBallots){
-                        @if(bal.id.toString() == fav_bal){
+                        @if(fav_bal.contains(bal.id.toString())){
+                          @if(User.hasUpdates(bal.upvotes, bal.downvotes, fav_bal.toString())){
+                            <li class="notify" style="background:yellow"><a href="/ballot/@bal.id">@bal.ballotName <i class="fa fa-arrow-up"></i>@bal.upvotes <i class="fa fa-arrow-down"></i> @bal.downvotes</a></li>
+                          <li role="separator" class="divider"></li>
+                          } else {
                           <li><a href="/ballot/@bal.id">@bal.ballotName <i class="fa fa-arrow-up"></i>@bal.upvotes <i class="fa fa-arrow-down"></i> @bal.downvotes</a></li>
                           <li role="separator" class="divider"></li>
+                          }
                         }
                       }
                     }

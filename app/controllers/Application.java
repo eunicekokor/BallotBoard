@@ -111,7 +111,8 @@ public class Application extends Controller {
 
         if (bForm.hasErrors()) {
             currentUser = session("username");
-            return badRequest(ballotForm.render(bForm, currentUser));
+            userObject = User.findByUsername(currentUser);
+            return badRequest(ballotForm.render(bForm, currentUser, Ballot.findAll(), userObject));
         } else {
             Ballot tmp = new Ballot();
             tmp.create(bForm.get().ballotName, bForm.get().description, request().username());
@@ -129,7 +130,8 @@ public class Application extends Controller {
     @Security.Authenticated(Secured.class)
     public Result ballotForm() {
         currentUser = session("username");
-        return ok(ballotForm.render(form(BallotForm.class), currentUser));
+        userObject = User.findByUsername(currentUser);
+        return ok(ballotForm.render(form(BallotForm.class), currentUser, Ballot.findAll(), userObject));
     }
 
     /**
@@ -160,7 +162,7 @@ public class Application extends Controller {
         currentUser = session("username");
         userObject = User.findByUsername(currentUser);
         ObjectId ballotId = new ObjectId(id);
-        return ok(ballotView.render(Ballot.findById(ballotId), currentUser, "", userObject));
+        return ok(ballotView.render(Ballot.findById(ballotId), currentUser, "", userObject, Ballot.findAll()));
     }
 
     @Security.Authenticated(Secured.class)
@@ -175,7 +177,7 @@ public class Application extends Controller {
         }
         else {
             currentUser = session("username");
-            return ok(ballotView.render(Ballot.findById(ballotId), currentUser, "Sorry. You have already voted.",userObject));
+            return ok(ballotView.render(Ballot.findById(ballotId), currentUser, "Sorry. You have already voted.",userObject, Ballot.findAll()));
         }
 
         return redirect(
