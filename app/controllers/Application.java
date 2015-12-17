@@ -13,6 +13,8 @@ import static play.data.Form.*;
 import play.mvc.Security;
 import views.html.*;
 
+import java.util.*;
+
 public class Application extends Controller {
 
     private String currentUser = "";
@@ -31,7 +33,7 @@ public class Application extends Controller {
      */
     public Result logout() {
         session().clear();
-        flash("success", "You've been logged out");
+        flash("success", "You've been logged out successfully!");
         currentUser = "";
         return redirect(
             routes.Application.login()
@@ -109,7 +111,8 @@ public class Application extends Controller {
 
         if (bForm.hasErrors()) {
             currentUser = session("username");
-            return badRequest(ballotForm.render(bForm, currentUser));
+            userObject = User.findByUsername(currentUser);
+            return badRequest(ballotForm.render(bForm, currentUser, Ballot.findAll(), userObject));
         } else {
             Ballot tmp = new Ballot();
             tmp.create(bForm.get().ballotName, bForm.get().description, request().username());
@@ -127,7 +130,8 @@ public class Application extends Controller {
     @Security.Authenticated(Secured.class)
     public Result ballotForm() {
         currentUser = session("username");
-        return ok(ballotForm.render(form(BallotForm.class), currentUser));
+        userObject = User.findByUsername(currentUser);
+        return ok(ballotForm.render(form(BallotForm.class), currentUser, Ballot.findAll(), userObject));
     }
 
     /**
@@ -157,8 +161,14 @@ public class Application extends Controller {
     public Result ballotView(String id) {
         currentUser = session("username");
         userObject = User.findByUsername(currentUser);
-        ObjectId ballotId = new ObjectId(id);
-        return ok(ballotView.render(Ballot.findById(ballotId), currentUser, "", userObject));
+        ObjectId ballotId = null;
+        if (ObjectId.isValid(id)) {
+            ballotId = new ObjectId(id);
+        } else {
+            return ok(ballot.render(Ballot.findAll(), currentUser, userObject));
+        }
+
+        return ok(ballotView.render(Ballot.findById(ballotId), currentUser, "", userObject, Ballot.findAll()));
     }
 
     @Security.Authenticated(Secured.class)
@@ -173,7 +183,8 @@ public class Application extends Controller {
         }
         else {
             currentUser = session("username");
-            return ok(ballotView.render(Ballot.findById(ballotId), currentUser, "Sorry. You have already voted.",userObject));
+            return ok(ballotView.render(Ballot.findById(ballotId), currentUser,
+                      "Sorry. You have already voted.", userObject, Ballot.findAll()));
         }
 
         return redirect(
@@ -182,17 +193,18 @@ public class Application extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public Result ballotFavorite(String id){
+    public Result ballotFavorite(String id, String up, String down){
       userObject = User.findByUsername(session("username"));
       ObjectId ballotId = new ObjectId(id);
         if (!userObject.isFavorite(id)) {
             User.addFavorite(userObject, id);
-            System.out.println("got to favorite");
+            User.addFavoriteHistoryVotes(userObject, id, up, down);
         }
 
         else {
             currentUser = session("username");
             User.removeFavorite(userObject, id);
+            User.removeFavoriteHistoryVotes(userObject, id, up, down);
         }
         return redirect(
             routes.Application.ballotView(id)

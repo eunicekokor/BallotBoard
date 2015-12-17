@@ -1,4 +1,4 @@
-@(form: Form[Application.BallotForm], user: String)
+@(form: Form[Application.BallotForm], user: String, ballots: List[Ballot], userObj: User)
 
 @*********************
  * Potentially having current user on each page *
@@ -8,27 +8,54 @@
 @main("Create an Ballot") {
 
 <div class="header">
-    <div class="navbar navbar-default" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="">BallotBoard</a>
-          <div class="navbar-right">
-            <a class="btn btn-default navbar-btn" href="/create">Create Ballot</a>
-            <a class="btn btn-default navbar-btn" href="/ballot">View All Ballots</a>
-            <a href="/user"><i class="fa fa-user"></i> @user</a>
-            <a class="btn btn-default navbar-btn" href="/logout"><i class="fa fa-sign-out"></i> Logout</a>
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+          <a class="navbar-brand" href="/ballot"><img src="@routes.Assets.versioned("images/logo.png")" class="img-responsive" alt="BallotBoard"/></a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+              @if(!user.equals("")) {
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle btn-default navbar-btn" data-toggle="dropdown" role="button" id="dropdownMenu1"  aria-haspopup="true" aria-expanded="true"><i class="fa fa-star star-favorite"></i> Favorites<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    @for(fav_bal <- userObj.favoriteHistoryWithVotes){
+                      @for(bal <- ballots){
+                        @if(fav_bal.contains(bal.id.toString())){
+                          @if(User.hasUpdates(bal.upvotes, bal.downvotes, fav_bal.toString())){
+                            <li style="background:yellow"><a href="/ballot/@bal.id">@bal.ballotName <i class="fa fa-arrow-up"></i>@bal.upvotes <i class="fa fa-arrow-down"></i> @bal.downvotes</a></li>
+                            <li role="separator" class="divider"></li>
+                          } else {
+                            <li><a href="/ballot/@bal.id">@bal.ballotName <i class="fa fa-arrow-up"></i>@bal.upvotes <i class="fa fa-arrow-down"></i> @bal.downvotes</a></li>
+                            <li role="separator" class="divider"></li>
+                          }
+                        }
+                      }
+                    }
+                  </ul>
+                </li>
+              }
+              <li><a class="btn-default navbar-btn" href="/ballot">View All Ballots</a></li>
+              <li><a class="btn-default navbar-btn" href="/user"><i class="fa fa-user"></i> @user</a></li>
+              <li><a style="color: black" class="btn-primary navbar-btn" href="/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+            </ul>
           </div>
-        </div>
       </div>
     </div>
-  </div>
-
-  <section class="contents">
-    <div class="container">
+  </nav>
+</div>
+<section class="ballot-view">
+  <div class="container">
     <div class="row" id="form-container" >
-      <div class="col-md-8 col-md-offset-2">
+      <div class="col-md-6 col-md-offset-3">
+        <h2 class="text-center">Create a new ballot</h2>
+        <br>
         @helper.form(routes.Application.create) {
-          <img src="@routes.Assets.versioned("images/logo.png")" class="img-responsive" alt="" /></img>
           @if(form.hasGlobalErrors) {
             <p class="error">
             @form.globalError.message
@@ -37,19 +64,21 @@
           <input type="text" name="ballotName" placeholder="Name of Ballot" required class="form-control input-lg bal_name"/></input>
           <div style="display: none;" id="bal_name" class="bs-callout bs-callout-info">
             <h5>Tip: Make a Catchy Title </h5>
-            <p class="ballot_tip"> Create an eye catching title to draw people to your cause </p>
+            <p class="ballot_tip">Create an eye catching title to draw people to your cause</p>
           </div>
-
           <textarea style="height:100px" type="text" name="description" placeholder="Ballot Description" required class="form-control bal_desc"/></textarea>
           <div  style="display: none;" id="bal_desc" class="bs-callout bs-callout-info">
             <h5>Tip: Tell your story </h5>
             <p class="ballot_tip"> Invite others into your plight </p>
           </div>
-          <button type="submit" name="go" class="btn btn-lg btn-primary btn-block"> Create </button>
+        </div>
+        <div class="col-md-4 col-md-offset-4">
+          <button type="submit" name="go" class="btn btn-lg btn-primary btn-block">Create</button>
+        </div>
         }
       </div>
     </div>
   </div>
-  </section>
+</section>
 
 }
