@@ -19,12 +19,13 @@ import static play.test.Helpers.*;
 import static org.junit.Assert.*;
 
 import models.*;
-import models.Ballot;
 
 import play.api.Play;
 import play.api.test.FakeApplication;
 
 public class ViewTest {
+    private User _user = new User();
+
 
     private Ballot _ballot1 = new Ballot();
     private Ballot _ballot2 = new Ballot();
@@ -34,7 +35,7 @@ public class ViewTest {
      @Test
 
      public void renderBallot(){
-       Content html = views.html.ballot.render(ballotList, "BALLOT");
+       Content html = views.html.ballot.render(ballotList, "BALLOT", _user);
        assertEquals(contentType(html), "text/html");
        String content= Helpers.contentAsString(html);
        //System.out.println(content);
@@ -46,11 +47,11 @@ public class ViewTest {
   @Test
 
      public void renderIndexView(){
-         
+
 
       Content html = views.html.index.render();
        assertEquals(contentType(html), "text/html");
-    
+
     String content= Helpers.contentAsString(html);
        //System.out.println(content);
        Assert.assertTrue(content.contains("Welcome to BallotBoard"));
@@ -64,14 +65,14 @@ public class ViewTest {
         running(fakeApplication(), new Runnable(){
       public void run() {
                Result result = route(controllers.routes.Application.login());
-                
+
                 assertEquals("text/html", result.contentType());
 
                 assertTrue(contentAsString(result).contains("View All Ballots"));
                  }
-    }); 
+    });
 
-       
+
 
 
      }
@@ -83,22 +84,22 @@ public class ViewTest {
         running(fakeApplication(), new Runnable(){
       public void run() {
                 Result result = route(controllers.routes.Application.signup());
-                
+
                 assertEquals("text/html", result.contentType());
 
                 assertTrue(contentAsString(result).contains("Register"));
-        }        
-       }); 
-       
+        }
+       });
+
 
      }
 
 
 
 
-     
 
 
-      
+
+
 
 }
