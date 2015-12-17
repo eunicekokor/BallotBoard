@@ -13,6 +13,8 @@ import static play.data.Form.*;
 import play.mvc.Security;
 import views.html.*;
 
+import java.util.*;
+
 public class Application extends Controller {
 
     private String currentUser = "";
@@ -182,17 +184,18 @@ public class Application extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public Result ballotFavorite(String id){
+    public Result ballotFavorite(String id, String up, String down){
       userObject = User.findByUsername(session("username"));
       ObjectId ballotId = new ObjectId(id);
         if (!userObject.isFavorite(id)) {
             User.addFavorite(userObject, id);
-            System.out.println("got to favorite");
+            User.addFavoriteHistoryVotes(userObject, id, up, down);
         }
 
         else {
             currentUser = session("username");
             User.removeFavorite(userObject, id);
+            User.removeFavoriteHistoryVotes(userObject, id, up, down);
         }
         return redirect(
             routes.Application.ballotView(id)

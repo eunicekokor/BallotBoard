@@ -37,11 +37,12 @@
               </div>
               <div class="panel-footer text-left">
                 <a class="btn btn-primary" href="@routes.Application.ballotVote(ballot.id.toString(), true)"><i class="fa fa-thumbs-up"></i> UpVote</a>
-                <a class="btn btn-primary" href="@routes.Application.ballotVote(ballot.id.toString(), false)"><i class="fa fa-thumbs-down"></i> DownVote</a><span class="col-sm-offset-6">
+                <a class="btn btn-primary" href="@routes.Application.ballotVote(ballot.id.toString(), false)"><i class="fa fa-thumbs-down"></i> DownVote</a><span class="col-sm-offset-5">
+
                 @if(userObj.isFavorite(ballot.id.toString())){
-                  Unfavorite <a href="@routes.Application.ballotFavorite(ballot.id.toString())"> <i class="fa fa-star star-favorite"></i> </a>
+                  Unfavorite <a href="@routes.Application.ballotFavorite(ballot.id.toString(), ballot.upvotes.toString(), ballot.downvotes.toString())"> <i class="fa fa-star star-favorite"></i> </a>
                 } else{
-                  Favorite <a href="@routes.Application.ballotFavorite(ballot.id.toString())"><i class="fa fa-star-o star-normal"></i></a>
+                  Favorite <a href="@routes.Application.ballotFavorite(ballot.id.toString(), ballot.upvotes.toString(), ballot.downvotes.toString())"><i class="fa fa-star-o star-normal"></i></a>
                 }
 
               </div>

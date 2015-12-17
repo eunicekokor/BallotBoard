@@ -26,6 +26,7 @@ public class User {
     public String password;
     public ArrayList<String> voteHistory;
     public ArrayList<String> favoriteHistory;
+    public ArrayList<String> favoriteHistoryWithVotes;
     public ArrayList<String> notifications;
 
     /**
@@ -42,6 +43,7 @@ public class User {
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.voteHistory = new ArrayList<>();
         this.favoriteHistory = new ArrayList<>();
+        this.favoriteHistoryWithVotes = new ArrayList<>();
         this.notifications = new ArrayList<>();
     }
 
@@ -124,6 +126,29 @@ public class User {
         // users().update("{_id}", updateQuery.toString());
         users().update("{_id: #}", userObjId.id).with("{$pull:{favoriteHistory: #}}", ballotid);
         //{$addToSet:{bodyParameters:#}}
+    }
+
+    public static void addFavoriteHistoryVotes(User userObjId, String id, String up, String down){
+        String ballotinfo = id + "?up=" + up + "+down=" + down;
+        users().update("{_id: #}", userObjId.id).with("{$push:{favoriteHistoryWithVotes: #}}", ballotinfo);
+
+    }
+
+    public static void removeFavoriteHistoryVotes(User userObjId, String id, String up, String down){
+      String ballotinfo = id + "?up=" + up + "+down=" + down;
+      users().update("{_id: #}", userObjId.id).with("{$pull:{favoriteHistoryWithVotes: #}}", ballotinfo);
+    }
+
+    public static Boolean hasUpdates(int upvotes, int downvotes, String favString){
+        String downstuff = favString.substring(favString.lastIndexOf('+') + 1);
+        String final_down = downstuff.split("=")[1];
+        String upstuff = favString.substring(favString.lastIndexOf('?') +1, favString.lastIndexOf('+'));
+        String final_up = upstuff.split("=")[1];
+        if (Integer.parseInt(final_up) == upvotes && Integer.parseInt(final_down) == downvotes){
+          return false;
+        }
+
+        return true;
     }
 
 
