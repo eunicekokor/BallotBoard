@@ -136,7 +136,7 @@ public class User {
 
     public static void removeFavoriteHistoryVotes(User userObjId, String id, String up, String down){
       String ballotinfo = id + "?up=" + up + "+down=" + down;
-      users().update("{_id: #}", userObjId.id).with("{$pull:{favoriteHistoryWithVotes: #}}", ballotinfo);
+      users().update("{_id: #}", userObjId.id).with("{$pull:{favoriteHistoryWithVotes: {$regex : #}}}", id);
     }
 
     public static Boolean hasUpdates(int upvotes, int downvotes, String favString){
