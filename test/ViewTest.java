@@ -26,10 +26,6 @@ import play.api.test.FakeApplication;
 public class ViewTest {
     private User _user = new User();
 
-
-    private User _user = new User();
-
-
     private Ballot _ballot1 = new Ballot();
     private Ballot _ballot2 = new Ballot();
 

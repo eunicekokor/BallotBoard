@@ -18,7 +18,7 @@ import controllers.*;
 import models.*;
 
 public class ApplicationTest {
-    
+
     @Test
     public void indexRoute() {
         running(fakeApplication(), new Runnable() {
@@ -93,7 +93,7 @@ public class ApplicationTest {
         running(fakeApplication(), new Runnable() {
             public void run() {
                 Result result = route(controllers.routes.Application.user());
-                assertEquals(303, result.status()); 
+                assertEquals(303, result.status());
                 assertEquals("/login", result.redirectLocation());
             }
         });
@@ -104,7 +104,9 @@ public class ApplicationTest {
         running(fakeApplication(), new Runnable() {
             public void run() {
                 Result result = route(controllers.routes.Application.ballotView("Invalid-Ballot-ID"));
-                assertEquals(303, result.status()); 
+                assertEquals(303, result.status());
+                Result result2 = route(controllers.routes.Application.ballotView("5648eabc066905a0761e2EUNI"));
+                assertEquals(303, result2.status());
                 assertEquals("/login", result.redirectLocation());
             }
         });
@@ -115,7 +117,7 @@ public class ApplicationTest {
         running(fakeApplication(), new Runnable() {
             public void run() {
                 Result result = route(controllers.routes.Application.ballotForm());
-                assertEquals(303, result.status()); 
+                assertEquals(303, result.status());
                 assertEquals("/login", result.redirectLocation());
             }
         });

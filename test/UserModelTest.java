@@ -133,6 +133,27 @@ public class UserModelTest {
     });
   }
 
+   @Test
+  public void favoriteTest(){
+    running(fakeApplication(), new Runnable(){
+      public void run(){
+        User _user = new User();
+        _user.create("e", "e", "e@e.com", "eeeee");
+        _user.insert();
+        String fakeBallotId = "12345";
+        String realBallotId = "77777";
+        _user.favoriteHistory.add(realBallotId);
+        _user.favoriteHistoryWithVotes.add(realBallotId+"?up=7+down=6");
+
+        // Check if Favorite
+        Boolean not_favorited = _user.isFavorite(fakeBallotId);
+        Boolean has_favorited = _user.isFavorite(realBallotId);
+        assertFalse(not_favorited);
+        assertTrue(has_favorited);
+      }
+    });
+  }
+
 
 
 }
