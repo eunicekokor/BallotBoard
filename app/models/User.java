@@ -102,28 +102,17 @@ public class User {
     }
 
     public static void add(User userObjId, String ballotid){
-        // DBObject listItem = new BasicDBObject("voteHistory", new BasicDBObject("id",ballotid));
-        // DBObject updateQuery = new BasicDBObject("$push", listItem);
-        // DBObject find = new BasicDBObject("_id", userObjId);
-        // users().update("{_id}", updateQuery.toString());
         users().update("{_id: #}", userObjId.id).with("{$push:{voteHistory: #}}", ballotid);
         //{$addToSet:{bodyParameters:#}}
     }
 
     public static void addFavorite(User userObjId, String ballotid){
-        // DBObject listItem = new BasicDBObject("voteHistory", new BasicDBObject("id",ballotid));
-        // DBObject updateQuery = new BasicDBObject("$push", listItem);
-        // DBObject find = new BasicDBObject("_id", userObjId);
-        // users().update("{_id}", updateQuery.toString());
         users().update("{_id: #}", userObjId.id).with("{$push:{favoriteHistory: #}}", ballotid);
         //{$addToSet:{bodyParameters:#}}
     }
 
     public static void removeFavorite(User userObjId, String ballotid){
-        // DBObject listItem = new BasicDBObject("voteHistory", new BasicDBObject("id",ballotid));
-        // DBObject updateQuery = new BasicDBObject("$push", listItem);
-        // DBObject find = new BasicDBObject("_id", userObjId);
-        // users().update("{_id}", updateQuery.toString());
+
         users().update("{_id: #}", userObjId.id).with("{$pull:{favoriteHistory: #}}", ballotid);
         //{$addToSet:{bodyParameters:#}}
     }
@@ -150,7 +139,6 @@ public class User {
 
         return true;
     }
-
 
 
     /**

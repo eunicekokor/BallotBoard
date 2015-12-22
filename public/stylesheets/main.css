@@ -1,38 +1,30 @@
 body {
-    background: white;
-    background: #EEEEEE;
+    background: #FFFFFF;
+    color: #78909C;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
 }
-.star-normal{
-  color: gray;
+
+.star-normal {
+  color: #2196F3;
+  font-size: 2em;
 }
 
 .star-favorite:hover {
-  color: gray;
+  color: #2196F3;
 }
 
 .star-normal:hover {
-  color: #FFFF99;
+  color: #009688;
 }
 
-.star-favorite{
-  color: #FFFF99;
+.star-favorite {
+  color: #009688;
 }
 .container {
     background: inherit;
-}
-
-#form-container {
-    background: #ffffff;
-    -webkit-box-shadow: 0 0 5px 1px #616161;
-    -moz-box-shadow: 0 0 5px 1px #616161;
-    box-shadow: 0 0 5px 1px #616161;
-    padding-bottom: 30px;
-    width: 50%;
-    margin: 0 auto;
 }
 
 .navbar-header{
@@ -49,11 +41,11 @@ body {
     margin-top: 5px;
 }
 
-.panel{
+.panel {
     box-shadow: 5px 5px 2px #888888;
 }
 
-.panel:hover{
+.panel:hover {
     box-shadow: 2px 2px 1px #888888;
     border-width: thin;
 }
@@ -88,41 +80,15 @@ body {
     border-color: #888888;
 }
 
-.navbar, .navbar-default{
+.navbar, .navbar-default {
     border-radius: 0 !important;
-    /*box-shadow: 2px 2px 1px #bbb;*/
 }
 
 .navbar > .navbar-right > a {
     padding-left: 5px;
     padding-right: 15px;
 }
-.btn {
-    /*border-color: #bbb;*/
-}
 
-.btn:hover{
-    /*background: #bbb;*/
-}
-
-.intro > h1 {
-    font-size: 72px;
-}
-
-.intro > h3 {
-    font-size: 24px;
-}
-.intro .btn {
-    width: 100%;
-}
-
-.intro {
-    margin-top: 60px;
-}
-
-.contents {
-    margin-top: 20px;
-}
 
 .jumbotron {
     background: #ffffff;
@@ -165,4 +131,110 @@ body {
 #downvote:hover{
   background: #FF5722;
   color: white;
+}
+
+/* Intro, Login, Signup */
+.intro {
+    margin-top: 70px;
+    color: #546E7A;
+}
+
+.intro > h1 {
+    font-size: 72px;
+}
+
+.intro > h3 {
+    font-size: 24px;
+}
+.intro .btn {
+    width: 60%;
+}
+
+.intro .btn, .login .btn, .signup .btn, .profile .btn {
+    border-radius: 30px;
+}
+
+.intro .btn:hover, .login .btn:hover,
+.signup .btn:hover, .profile .btn:hover {
+    background: #43A047;
+    border: 1px solid #43A047;
+}
+
+.navbar-brand img {
+    width: 200px;
+    height: auto;
+    margin-top: -5px;
+}
+
+.signup, .login {
+    margin-top: 70px;
+}
+
+.well {
+    background: #CFD8DC;
+    border-radius: 10px;
+}
+
+#form-container .btn {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+#form-container hr {
+    width: 40%;
+    border: 1px solid #6b8693;
+}
+
+#form-container h4 {
+    font-size: 20px;
+}
+
+#reset {
+    color: #2196F3;
+    text-decoration: none;
+}
+
+/* Profile */
+.navbar-left {
+    margin-left: 30%;
+    font-size: 16px;
+}
+
+.navbar-right li {
+    font-size: 16px;
+}
+
+#ballot-header {
+    text-decoration: none;
+    font-size: 16px;
+    color: #2196F3;
+}
+
+.panel:hover {
+    cursor: pointer;
+}
+
+.badge {
+    background: #6b8693;
+}
+
+/* Ballot View */
+.ballot-view .btn {
+    border-radius: 30px;
+    margin-left: 10px;
+}
+
+#upvote-button:hover {
+    background: #43A047;
+    border: 1px solid #43A047;
+}
+
+#downvote-button:hover {
+    background: #FF5722;
+    border: 1px solid #FF5722;
+}
+
+.ballot-view input {
+    margin-bottom: 15px;
 }

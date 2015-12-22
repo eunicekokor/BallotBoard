@@ -27,79 +27,56 @@ public class ViewTest {
     private User _user = new User();
 
 
+    private User _user = new User();
+
+
     private Ballot _ballot1 = new Ballot();
     private Ballot _ballot2 = new Ballot();
 
     List<Ballot> ballotList = new ArrayList<Ballot>();
 
-     @Test
 
-     public void renderBallot(){
-       Content html = views.html.ballot.render(ballotList, "BALLOT", _user);
-       assertEquals(contentType(html), "text/html");
-       String content= Helpers.contentAsString(html);
-       //System.out.println(content);
-       Assert.assertTrue(content.contains("BALLOT"));
+    @Test
+    public void renderBallot() {
+        Content html = views.html.ballot.render(ballotList, "BALLOT", _user);
+        assertEquals(contentType(html), "text/html");
+        String content= Helpers.contentAsString(html);
+        Assert.assertTrue(content.contains("BALLOT"));
+    }
 
+
+    @Test
+    public void renderIndexView() {
+        Content html = views.html.index.render();
+        assertEquals(contentType(html), "text/html");
+        String content= Helpers.contentAsString(html);
+        Assert.assertTrue(content.contains("Welcome to BallotBoard"));
      }
 
 
-  @Test
-
-     public void renderIndexView(){
-
-
-      Content html = views.html.index.render();
-       assertEquals(contentType(html), "text/html");
-
-    String content= Helpers.contentAsString(html);
-       //System.out.println(content);
-       Assert.assertTrue(content.contains("Welcome to BallotBoard"));
-     }
-
-
-@Test
-
-     public void renderLoginView(){
+    @Test
+    public void renderLoginView(){
 
         running(fakeApplication(), new Runnable(){
-      public void run() {
-               Result result = route(controllers.routes.Application.login());
-
+            public void run() {
+                Result result = route(controllers.routes.Application.login());
                 assertEquals("text/html", result.contentType());
-
                 assertTrue(contentAsString(result).contains("View All Ballots"));
-                 }
-    });
+            }
+        });
+    }
 
 
-
-
-     }
-
-
-     @Test
-
-     public void renderSignUpView(){
+    @Test
+    public void renderSignUpView(){
         running(fakeApplication(), new Runnable(){
-      public void run() {
+            public void run() {
                 Result result = route(controllers.routes.Application.signup());
 
+
                 assertEquals("text/html", result.contentType());
-
                 assertTrue(contentAsString(result).contains("Register"));
-        }
-       });
-
-
-     }
-
-
-
-
-
-
-
-
-
+            }
+        });
+    }
 }

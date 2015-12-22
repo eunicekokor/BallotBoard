@@ -33,7 +33,7 @@ public class Application extends Controller {
      */
     public Result logout() {
         session().clear();
-        flash("success", "You've been logged out");
+        flash("success", "You've been logged out successfully!");
         currentUser = "";
         return redirect(
             routes.Application.login()
@@ -161,7 +161,17 @@ public class Application extends Controller {
     public Result ballotView(String id) {
         currentUser = session("username");
         userObject = User.findByUsername(currentUser);
+<<<<<<< HEAD
         ObjectId ballotId = new ObjectId(id);
+=======
+        ObjectId ballotId = null;
+        if (ObjectId.isValid(id)) {
+            ballotId = new ObjectId(id);
+        } else {
+            return ok(ballot.render(Ballot.findAll(), currentUser, userObject));
+        }
+
+>>>>>>> origin
         return ok(ballotView.render(Ballot.findById(ballotId), currentUser, "", userObject, Ballot.findAll()));
     }
 
@@ -177,7 +187,12 @@ public class Application extends Controller {
         }
         else {
             currentUser = session("username");
+<<<<<<< HEAD
             return ok(ballotView.render(Ballot.findById(ballotId), currentUser, "Sorry. You have already voted.",userObject, Ballot.findAll()));
+=======
+            return ok(ballotView.render(Ballot.findById(ballotId), currentUser,
+                      "Sorry. You have already voted.", userObject, Ballot.findAll()));
+>>>>>>> origin
         }
 
         return redirect(
