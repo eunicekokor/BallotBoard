@@ -161,17 +161,17 @@ public class Application extends Controller {
     public Result ballotView(String id) {
         currentUser = session("username");
         userObject = User.findByUsername(currentUser);
-<<<<<<< HEAD
-        ObjectId ballotId = new ObjectId(id);
-=======
+
         ObjectId ballotId = null;
         if (ObjectId.isValid(id)) {
             ballotId = new ObjectId(id);
+            if (Ballot.findById(ballotId) == null){
+              return ok(ballot.render(Ballot.findAll(), currentUser, userObject));
+            }
         } else {
             return ok(ballot.render(Ballot.findAll(), currentUser, userObject));
         }
 
->>>>>>> origin
         return ok(ballotView.render(Ballot.findById(ballotId), currentUser, "", userObject, Ballot.findAll()));
     }
 
@@ -187,12 +187,8 @@ public class Application extends Controller {
         }
         else {
             currentUser = session("username");
-<<<<<<< HEAD
-            return ok(ballotView.render(Ballot.findById(ballotId), currentUser, "Sorry. You have already voted.",userObject, Ballot.findAll()));
-=======
             return ok(ballotView.render(Ballot.findById(ballotId), currentUser,
                       "Sorry. You have already voted.", userObject, Ballot.findAll()));
->>>>>>> origin
         }
 
         return redirect(
@@ -277,5 +273,6 @@ public class Application extends Controller {
             return null;
         }
     }
+
 
 }
